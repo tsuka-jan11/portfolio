@@ -389,22 +389,40 @@
       transform: scale(1.5);
     }
 
+    /* ═══════════════════════════════════════════
+       MOBILE  ≤ 768px — 横スライダーは維持、
+       各カード内で縦スクロール可、アドレスバーあり
+    ═══════════════════════════════════════════ */
     @media (max-width: 768px) {
-      .slide { padding: 16px 16px 50px; }   /* 16px sides visible, 50px bottom for dots */
-      .card { border-radius: 24px; }
-      .arrow-prev { left: 4px; }
-      .arrow-next { right: 4px; }
-      .card-cover {
-        justify-content: center;
-        align-items: flex-start;
-        padding: 0 7%;
-        text-align: left;
+
+      /* svh = stable viewport height（アドレスバーあり前提） */
+      body { height: 100svh; }
+      .slider-viewport { height: 100svh; }
+      .slide { height: 100svh; padding: 16px 16px 50px; }
+
+      /* カード：高さはスライドに合わせ、内側で縦スクロール */
+      .card {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 24px;
       }
-      .dots { bottom: 18px; gap: 4px; }
-      .dot { width: 5px; height: 5px; }
-      .card-section { padding: 16px 18px 24px; }
-      .sec-nav { gap: 6px; margin-bottom: 14px; }
-      .sec-badge { width: 26px; height: 26px; font-size: 0.5rem; }
+
+      /* カバーカード */
+      .card-cover {
+        min-height: 80svh;
+        justify-content: flex-end;
+        padding: 0 8% 10%;
+      }
+
+      /* セクションカード：コンテンツが溢れてカードがスクロールできるよう overflow: visible */
+      .card-section {
+        padding: 20px 20px 28px;
+        overflow: visible;
+      }
+      .sec-nav { gap: 7px; margin-bottom: 16px; }
+      .sec-badge { width: 28px; height: 28px; font-size: 0.52rem; }
+
+      /* 2カラム → 1カラム、高さauto（コンテンツ量で決まる） */
       .sec-body,
       .sec-body.layout-b,
       .sec-body.layout-c,
@@ -412,16 +430,43 @@
       .sec-body.layout-e,
       .sec-body.layout-f {
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
+        height: auto;
+        flex: none;
+        min-height: unset;
+        gap: 16px;
       }
-      .img-grid-banner {
-        grid-template-columns: repeat(3, 1fr);
+
+      /* 左カラム：shrink解除 */
+      .sec-col-left { flex-shrink: unset; min-height: unset; }
+
+      /* 右カラム（画像エリア）：固定高さで表示 */
+      .sec-col-right {
+        flex: none;
+        height: 60vw;
+        overflow: hidden;
       }
+
+      /* 画像グリッド：高さを右カラムに合わせる */
+      .img-collage,
+      .img-grid-banner,
+      .img-grid-two,
+      .img-grid-three {
+        flex: none;
+        height: 100%;
+      }
+      .img-grid-banner { grid-template-columns: repeat(3, 1fr); }
+
+      /* Company Website の特殊画像 */
+      .proj-img-right { height: 50vw; }
+
+      /* ドット：ナビゲーション用に表示維持 */
+      .dots { bottom: 18px; gap: 4px; }
+      .dot { width: 5px; height: 5px; }
+      .arrow { display: none; }
     }
 
     @media (max-width: 480px) {
       .img-grid-banner { grid-template-columns: repeat(2, 1fr); }
-      .img-collage { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -1141,16 +1186,38 @@ LPビジュアル設計とアセットデザイン</p>
   <div class="dots" id="dots"></div>
 
   <script>
-    const track    = document.getElementById('track');
-    const slides   = track.querySelectorAll('.slide');
-    const dotsEl   = document.getElementById('dots');
-    const total    = slides.length;
-    // Restore page from URL hash on load
-    const hashIndex = parseInt(location.hash.replace('#', ''), 10);
-    let current      = (!isNaN(hashIndex) && hashIndex >= 0 && hashIndex < slides.length) ? hashIndex : 0;
-    let isAnimating   = false;
+    const track  = document.getElementById('track');
+    const slides = track.querySelectorAll('.slide');
+    const dotsEl = document.getElementById('dots');
+    const total  = slides.length;
+    const mq     = window.matchMedia('(max-width: 768px)');
 
-    // Build dots
+    // Restore page from URL hash (desktop only)
+    const hashIndex = parseInt(location.hash.replace('#', ''), 10);
+    let current     = (!isNaN(hashIndex) && hashIndex >= 0 && hashIndex < total) ? hashIndex : 0;
+    let isAnimating = false;
+
+    /* ── モバイル判定 ── */
+    function isMobile() { return mq.matches; }
+
+    /* ── デスクトップ用：スライダー位置を適用 ── */
+    function applyDesktopPosition(animate) {
+      if (animate === false) track.style.transition = 'none';
+      track.style.transform = `translateX(calc(-${current} * 100vw))`;
+      if (animate === false) {
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          track.style.transition = '';
+        }));
+      }
+    }
+
+    /* ── モバイル用：transformをリセット ── */
+    function applyMobileReset() {
+      track.style.transform = 'none';
+      track.style.transition = 'none';
+    }
+
+    /* ── ドット生成（デスクトップ表示時のみ使用） ── */
     slides.forEach((_, i) => {
       const d = document.createElement('button');
       d.className = 'dot' + (i === current ? ' active' : '');
@@ -1165,53 +1232,46 @@ LPビジュアル設計とアセットデザイン</p>
       });
     }
 
+    /* ── スライド移動（モバイル・デスクトップ共通） ── */
     function goTo(index) {
       if (isAnimating) return;
       isAnimating = true;
       current = ((index % total) + total) % total;
-      track.style.transform = `translateX(calc(-${current} * 100vw))`;
+      applyDesktopPosition(true);
       history.replaceState(null, '', '#' + current);
       updateUI();
       setTimeout(() => { isAnimating = false; }, 520);
     }
 
-    // Jump to initial page without animation
+    /* ── 初期位置セット ── */
     if (current > 0) {
-      track.style.transition = 'none';
-      track.style.transform = `translateX(calc(-${current} * 100vw))`;
-      requestAnimationFrame(() => {
-        track.style.transition = '';
-        updateUI();
-      });
+      applyDesktopPosition(false);
+      updateUI();
     }
 
+    /* ── 矢印ボタン ── */
     document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
     document.getElementById('next').addEventListener('click', () => goTo(current + 1));
 
-    // Recalculate position on window resize to prevent misalignment
+    /* ── リサイズ：位置を再適用 ── */
     let resizeTimer;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
-        track.style.transition = 'none';
-        track.style.transform = `translateX(calc(-${current} * 100vw))`;
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            track.style.transition = '';
-          });
-        });
+        applyDesktopPosition(false);
       }, 50);
     });
 
-    // Keyboard navigation
+    /* ── キーボード（デスクトップのみ） ── */
     document.addEventListener('keydown', e => {
+      if (isMobile()) return;
       if (e.key === 'ArrowLeft')  goTo(current - 1);
       if (e.key === 'ArrowRight') goTo(current + 1);
       if (e.key === 'Home')       goTo(0);
       if (e.key === 'End')        goTo(total - 1);
     });
 
-    // Touch swipe
+    /* ── タッチスワイプ（モバイル・デスクトップ共通） ── */
     let touchStartX = 0;
     let touchStartY = 0;
     const vp = document.querySelector('.slider-viewport');
@@ -1221,6 +1281,15 @@ LPビジュアル設計とアセットデザイン</p>
       touchStartY = e.touches[0].clientY;
     }, { passive: true });
 
+    /* 水平スワイプと判断したときだけ preventDefault → カード縦スクロールを妨げない */
+    vp.addEventListener('touchmove', e => {
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+        e.preventDefault(); // 水平スワイプ → スライダー操作、カードスクロールを止める
+      }
+    }, { passive: false });
+
     vp.addEventListener('touchend', e => {
       const dx = e.changedTouches[0].clientX - touchStartX;
       const dy = e.changedTouches[0].clientY - touchStartY;
@@ -1229,32 +1298,31 @@ LPビジュアル設計とアセットデザイン</p>
       }
     }, { passive: true });
 
-    // Mouse drag
+    /* ── マウスドラッグ（デスクトップのみ） ── */
     let dragStartX = 0;
     let dragging   = false;
 
     vp.addEventListener('mousedown', e => {
+      if (isMobile()) return;
       dragStartX = e.clientX;
       dragging   = true;
     });
-
     vp.addEventListener('mousemove', e => {
       if (dragging) e.preventDefault();
     }, { passive: false });
-
     window.addEventListener('mouseup', e => {
       if (!dragging) return;
       dragging = false;
+      if (isMobile()) return;
       const dx = e.clientX - dragStartX;
       if (Math.abs(dx) > 50) goTo(dx < 0 ? current + 1 : current - 1);
     });
-
-    // Prevent text selection during drag
     vp.addEventListener('dragstart', e => e.preventDefault());
 
-    // Mouse wheel
+    /* ── マウスホイール（デスクトップのみ） ── */
     let wheelCooldown = false;
     vp.addEventListener('wheel', e => {
+      if (isMobile()) return;   // モバイルはページスクロールに任せる
       e.preventDefault();
       if (wheelCooldown) return;
       wheelCooldown = true;
