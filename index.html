@@ -350,7 +350,7 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #c0b8b0;
+      background: #d8d2cc;
       border: none;
       outline: none;
       box-shadow: none;
@@ -361,7 +361,7 @@
       transition: background 0.3s, transform 0.3s;
     }
     .dot.active {
-      background: #3d3028;
+      background: #b0a89e;
       transform: scale(1.5);
     }
 
@@ -1117,15 +1117,13 @@ LPビジュアル設計とアセットデザイン</p>
     </svg>
   </button>
 
-  <!-- Counter & Dots -->
-  <div class="slide-counter" id="counter">01 / 22</div>
+  <!-- Dots -->
   <div class="dots" id="dots"></div>
 
   <script>
     const track    = document.getElementById('track');
     const slides   = track.querySelectorAll('.slide');
     const dotsEl   = document.getElementById('dots');
-    const counterEl = document.getElementById('counter');
     const total    = slides.length;
     // Restore page from URL hash on load
     const hashIndex = parseInt(location.hash.replace('#', ''), 10);
@@ -1145,9 +1143,6 @@ LPビジュアル設計とアセットデザイン</p>
       dotsEl.querySelectorAll('.dot').forEach((d, i) => {
         d.classList.toggle('active', i === current);
       });
-      const num = String(current + 1).padStart(2, '0');
-      const tot = String(total).padStart(2, '0');
-      counterEl.textContent = `${num} / ${tot}`;
     }
 
     function goTo(index) {
