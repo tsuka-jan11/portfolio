@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Takuji Tsukamoto — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --page-bg: #dedad6;
+      --card-bg: #f4f2ef;
+      --text: #1a1a1a;
+      --text-sub: #888;
+      --badge-on: #1e1e1e;
+      --badge-off: #c5c0bb;
+      --gap: 10px;
+      --radius: 22px;
+      --pad: 52px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--page-bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 32px;
+    }
+
+    .hero-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 80px 88px 80px 80px;
+      max-width: 960px;
+      width: 100%;
+    }
+
+    .hero-name {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .hero-title {
+      font-size: clamp(56px, 9vw, 96px);
+      font-weight: 300;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 22px;
+    }
+
+    .hero-years {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      margin-bottom: 6px;
+    }
+
+    .hero-label {
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--text-sub);
+      margin-bottom: 36px;
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: 200px 220px;
+      row-gap: 14px;
+      column-gap: 0;
+    }
+
+    .wf-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 11.5px;
+      letter-spacing: 0.1em;
+      font-weight: 400;
+    }
+
+    /* ── BADGE ── */
+    .badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #fff;
+      flex-shrink: 0;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    .badge.on  { background: var(--badge-on); }
+    .badge.off { background: var(--badge-off); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(244, 242, 239, 0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      padding: 0 36px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    nav::-webkit-scrollbar { display: none; }
+
+    nav a {
+      display: inline-block;
+      padding: 15px 18px;
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.2s;
+    }
+    nav a:hover { border-bottom-color: var(--text); }
+
+    /* ── MAIN ── */
+    main {
+      padding: 20px 20px 64px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* ── SECTION CARD ── */
+    .pf-section { margin-bottom: 16px; }
+
+    .section-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: var(--pad);
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 44px;
+    }
+
+    .section-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 52px;
+      align-items: start;
+    }
+
+    .section-info h2 {
+      font-size: 27px;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-info .desc {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-sub);
+      line-height: 2;
+      letter-spacing: 0.04em;
+    }
+
+    .section-info .link {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+    }
+
+    /* ── IMAGE GRIDS ── */
+    .img-grid {
+      display: grid;
+      gap: var(--gap);
+    }
+    .g2 { grid-template-columns: repeat(2, 1fr); }
+    .g3 { grid-template-columns: repeat(3, 1fr); }
+    .g4 { grid-template-columns: repeat(4, 1fr); }
+    .g5 { grid-template-columns: repeat(5, 1fr); }
+
+    .span2 { grid-column: span 2; }
+    .span3 { grid-column: span 3; }
+    .rspan2 { grid-row: span 2; }
+
+    .img-item {
+      overflow: hidden;
+      cursor: zoom-in;
+      background: #e4e0dc;
+    }
+    .img-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s ease;
+    }
+    .img-item:hover img { transform: scale(1.04); }
+
+    /* Fixed-height helpers */
+    .h160 { height: 160px; }
+    .h200 { height: 200px; }
+    .h240 { height: 240px; }
+    .h280 { height: 280px; }
+    .h320 { height: 320px; }
+    .h360 { height: 360px; }
+
+    /* ── LIGHTBOX ── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      cursor: zoom-out;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      box-shadow: 0 0 80px rgba(0,0,0,0.4);
+      cursor: default;
+    }
+    #lightbox-close {
+      position: fixed;
+      top: 20px; right: 28px;
+      background: none; border: none;
+      color: #fff; font-size: 2.2rem;
+      cursor: pointer; opacity: 0.7;
+      transition: opacity 0.2s;
+      line-height: 1;
+    }
+    #lightbox-close:hover { opacity: 1; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 56px 40px;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: #aaa;
+      text-transform: uppercase;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .section-layout { grid-template-columns: 220px 1fr; gap: 36px; }
+      .g4 { grid-template-columns: repeat(3, 1fr); }
+      .g5 { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    @media (max-width: 900px) {
+      :root { --pad: 36px; }
+      .section-layout { grid-template-columns: 1fr; gap: 28px; }
+      .g4, .g5 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      :root { --pad: 28px; }
+      main { padding: 12px 12px 40px; }
+      nav { padding: 0 16px; }
+      .hero-card { padding: 52px 32px; }
+      .g3, .g4, .g5 { grid-template-columns: repeat(2, 1fr); }
+      .span2 { grid-column: span 1; }
+      .rspan2 { grid-row: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-card">
+    <p class="hero-name">T A K U J I &nbsp;&nbsp; T S U K A M O T O</p>
+    <h1 class="hero-title">PORTFOLIO</h1>
+    <p class="hero-years">2 0 2 2 &nbsp;–&nbsp; 2 0 2 6</p>
+    <p class="hero-label">Workflow category</p>
+    <div class="workflow-grid">
+      <div class="wf-item"><span class="badge on">Ar</span>&nbsp;Art Direction</div>
+      <div class="wf-item"><span class="badge on">De</span>&nbsp;Design</div>
+      <div class="wf-item"><span class="badge on">Cp</span>&nbsp;Copy Writing</div>
+      <div class="wf-item"><span class="badge on">Ph</span>&nbsp;Photo Direction</div>
+      <div class="wf-item"><span class="badge on">Co</span>&nbsp;Concept planning</div>
+      <div class="wf-item"><span class="badge on">Mgr</span>&nbsp;Progress Management</div>
+      <div class="wf-item"><span class="badge on">Mo</span>&nbsp;Motion Graphics</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#website">Company Website</a>
+  <a href="#event">イベント・展示会</a>
+  <a href="#creative">各種クリエイティブ</a>
+  <a href="#rebranding">リブランディング</a>
+  <a href="#offline">オフラインツール</a>
+  <a href="#motion">モーショングラフィックス</a>
+</nav>
+
+<main>
+
+  <!-- ── 1. Company Website ── -->
+  <section class="pf-section" id="website">
+    <div class="section-card">
+      <div class="badge-row">
+        <span class="badge on">Ar</span>
+        <span class="badge on">De</span>
+        <span class="badge off">Cp</span>
+        <span class="badge off">Ph</span>
+        <span class="badge on">Co</span>
+        <span class="badge on">Mgr</span>
+        <span class="badge off">Mo</span>
+      </div>
+      <div class="section-layout">
+        <div class="section-info">
+          <h2>Company Website</h2>
+          <p class="desc">コーポレートサイトの<br>デザイン / 改修</p>
+        </div>
+        <div class="img-grid g3">
+          <div class="img-item h240 span2" onclick="openLightbox('../png/photo 76.png')"><img src="../png/photo 76.png" alt=""></div>
+          <div class="img-item h240 rspan2" onclick="openLightbox('../png/photo 79.png')"><img src="../png/photo 79.png" alt=""></div>
+          <div class="img-item h240" onclick="openLightbox('../png/photo 77.png')"><img src="../png/photo 77.png" alt=""></div>
+          <div class="img-item h200" onclick="openLightbox('../png/photo 80.png')"><img src="../png/photo 80.png" alt=""></div>
+          <div class="img-item h200" onclick="openLightbox('../png/photo 81.png')"><img src="../png/photo 81.png" alt=""></div>
+          <div class="img-item h200" onclick="openLightbox('../png/photo 84.png')"><img src="../png/photo 84.png" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 2. イベント・展示会 ── -->
+  <section class="pf-section" id="event">
+    <div class="section-card">
+      <div class="badge-row">
+        <span class="badge on">Ar</span>
+        <span class="badge on">De</span>
+        <span class="badge off">Cp</span>
+        <span class="badge off">Ph</span>
+        <span class="badge on">Co</span>
+        <span class="badge on">Mgr</span>
+        <span class="badge off">Mo</span>
+      </div>
+      <div class="section-layout">
+        <div class="section-info">
+          <h2>イベント・展示会</h2>
+          <p class="desc">ブースコンセプト立案、<br>デザイン実務<br>ベンダーマネジメント</p>
+        </div>
+        <div class="img-grid g3">
+          <div class="img-item h220 span2" onclick="openLightbox('../png/photo 71.png')"><img src="../png/photo 71.png" alt=""></div>
+          <div class="img-item rspan2" onclick="openLightbox('../png/photo 73.png')"><img src="../png/photo 73.png" alt=""></div>
+          <div class="img-item h220" onclick="openLightbox('../png/photo 72.png')"><img src="../png/photo 72.png" alt=""></div>
+          <div class="img-item h180" onclick="openLightbox('../png/photo 74.png')"><img src="../png/photo 74.png" alt=""></div>
+          <div class="img-item h180" onclick="openLightbox('../png/photo 75.png')"><img src="../png/photo 75.png" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. 各種クリエイティブ ── -->
+  <section class="pf-section" id="creative">
+    <div class="section-card">
+      <div class="badge-row">
+        <span class="badge on">Ar</span>
+        <span class="badge on">De</span>
+        <span class="badge on">Cp</span>
+        <span class="badge off">Ph</span>
+        <span class="badge off">Co</span>
+        <span class="badge off">Mgr</span>
+        <span class="badge off">Mo</span>
+      </div>
+      <div class="section-layout">
+        <div class="section-info">
+          <h2>各種クリエイティブ</h2>
+          <p class="desc">LP・セミナーバナー・出稿広告<br><br>アイキャッチ、バナーデザイン</p>
+        </div>
+        <div class="img-grid g4">
+          <div class="img-item h160" onclick="openLightbox('../png/photo 23.png')"><img src="../png/photo 23.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 24.png')"><img src="../png/photo 24.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 25.png')"><img src="../png/photo 25.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 26.png')"><img src="../png/photo 26.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 27.png')"><img src="../png/photo 27.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 28.png')"><img src="../png/photo 28.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 29.png')"><img src="../png/photo 29.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 30.png')"><img src="../png/photo 30.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 31.png')"><img src="../png/photo 31.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 53.png')"><img src="../png/photo 53.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 54.png')"><img src="../png/photo 54.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 55.png')"><img src="../png/photo 55.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 57.png')"><img src="../png/photo 57.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 58.png')"><img src="../png/photo 58.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 59.png')"><img src="../png/photo 59.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 60.png')"><img src="../png/photo 60.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 61.png')"><img src="../png/photo 61.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 95.png')"><img src="../png/photo 95.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 96.png')"><img src="../png/photo 96.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 97.png')"><img src="../png/photo 97.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 107.png')"><img src="../png/photo 107.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 108.png')"><img src="../png/photo 108.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 109.png')"><img src="../png/photo 109.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 110.png')"><img src="../png/photo 110.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 111.png')"><img src="../png/photo 111.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 112.png')"><img src="../png/photo 112.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 113.png')"><img src="../png/photo 113.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 114.png')"><img src="../png/photo 114.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 115.png')"><img src="../png/photo 115.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 116.png')"><img src="../png/photo 116.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 117.png')"><img src="../png/photo 117.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 118.png')"><img src="../png/photo 118.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 119.png')"><img src="../png/photo 119.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 120.png')"><img src="../png/photo 120.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 121.png')"><img src="../png/photo 121.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 122.png')"><img src="../png/photo 122.png" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 4. リブランディング ── -->
+  <section class="pf-section" id="rebranding">
+    <div class="section-card">
+      <div class="badge-row">
+        <span class="badge on">Ar</span>
+        <span class="badge on">De</span>
+        <span class="badge off">Cp</span>
+        <span class="badge on">Ph</span>
+        <span class="badge on">Co</span>
+        <span class="badge on">Mgr</span>
+        <span class="badge off">Mo</span>
+      </div>
+      <div class="section-layout">
+        <div class="section-info">
+          <h2>リブランディング</h2>
+          <p class="desc">自社プロダクトVIロゴの<br>リブランディング<br>ガイドライン含む<br>レギュレーションの策定</p>
+        </div>
+        <div class="img-grid g3">
+          <div class="img-item h200 span2" onclick="openLightbox('../png/photo 33.png')"><img src="../png/photo 33.png" alt=""></div>
+          <div class="img-item h200 rspan2" onclick="openLightbox('../png/photo 92.png')"><img src="../png/photo 92.png" alt=""></div>
+          <div class="img-item h200" onclick="openLightbox('../png/photo 40.png')"><img src="../png/photo 40.png" alt=""></div>
+          <div class="img-item h180" onclick="openLightbox('../png/photo 42.png')"><img src="../png/photo 42.png" alt=""></div>
+          <div class="img-item h180" onclick="openLightbox('../png/photo 44.png')"><img src="../png/photo 44.png" alt=""></div>
+          <div class="img-item h180" onclick="openLightbox('../png/photo 46.png')"><img src="../png/photo 46.png" alt=""></div>
+          <div class="img-item h180" onclick="openLightbox('../png/photo 48.png')"><img src="../png/photo 48.png" alt=""></div>
+          <div class="img-item h180" onclick="openLightbox('../png/photo 85.png')"><img src="../png/photo 85.png" alt=""></div>
+          <div class="img-item h180" onclick="openLightbox('../png/photo 90.png')"><img src="../png/photo 90.png" alt=""></div>
+          <div class="img-item h180" onclick="openLightbox('../png/photo 91.png')"><img src="../png/photo 91.png" alt=""></div>
+          <div class="img-item h180" onclick="openLightbox('../png/photo 93.png')"><img src="../png/photo 93.png" alt=""></div>
+          <div class="img-item h180" onclick="openLightbox('../png/photo 94.png')"><img src="../png/photo 94.png" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 5. オフラインツール ── -->
+  <section class="pf-section" id="offline">
+    <div class="section-card">
+      <div class="badge-row">
+        <span class="badge on">Ar</span>
+        <span class="badge on">De</span>
+        <span class="badge on">Cp</span>
+        <span class="badge on">Ph</span>
+        <span class="badge on">Co</span>
+        <span class="badge off">Mgr</span>
+        <span class="badge off">Mo</span>
+      </div>
+      <div class="section-layout">
+        <div class="section-info">
+          <h2>オフラインツール</h2>
+          <p class="desc">オープンやキャンペーンの<br>チラシやフライヤー等<br>紙媒体ツール制作経験。<br><br>ディレクション含め、<br>インパクト・特別感<br>覚えやすい多彩なトンマナ<br>での表現可能。</p>
+        </div>
+        <div class="img-grid g4">
+          <div class="img-item h160" onclick="openLightbox('../png/photo 32.png')"><img src="../png/photo 32.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 34.png')"><img src="../png/photo 34.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 35.png')"><img src="../png/photo 35.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 36.png')"><img src="../png/photo 36.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 37.png')"><img src="../png/photo 37.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 38.png')"><img src="../png/photo 38.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 39.png')"><img src="../png/photo 39.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 50.png')"><img src="../png/photo 50.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 51.png')"><img src="../png/photo 51.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 52.png')"><img src="../png/photo 52.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 56.png')"><img src="../png/photo 56.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 63.png')"><img src="../png/photo 63.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 64.png')"><img src="../png/photo 64.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 65.png')"><img src="../png/photo 65.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 66.png')"><img src="../png/photo 66.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 67.png')"><img src="../png/photo 67.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 68.png')"><img src="../png/photo 68.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 69.png')"><img src="../png/photo 69.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 70.png')"><img src="../png/photo 70.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 86.png')"><img src="../png/photo 86.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 87.png')"><img src="../png/photo 87.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 88.png')"><img src="../png/photo 88.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 98.png')"><img src="../png/photo 98.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 99.png')"><img src="../png/photo 99.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 100.png')"><img src="../png/photo 100.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 101.png')"><img src="../png/photo 101.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 102.png')"><img src="../png/photo 102.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 103.png')"><img src="../png/photo 103.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 104.png')"><img src="../png/photo 104.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 105.png')"><img src="../png/photo 105.png" alt=""></div>
+          <div class="img-item h160" onclick="openLightbox('../png/photo 106.png')"><img src="../png/photo 106.png" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 6. モーショングラフィックス ── -->
+  <section class="pf-section" id="motion">
+    <div class="section-card">
+      <div class="badge-row">
+        <span class="badge on">Ar</span>
+        <span class="badge on">De</span>
+        <span class="badge off">Cp</span>
+        <span class="badge off">Ph</span>
+        <span class="badge off">Co</span>
+        <span class="badge off">Mgr</span>
+        <span class="badge on">Mo</span>
+      </div>
+      <div class="section-layout">
+        <div class="section-info">
+          <h2>モーション<br>グラフィックス</h2>
+          <p class="desc">AfterEffects・Premiere<br>での映像制作。</p>
+        </div>
+        <div class="img-grid g3">
+          <div class="img-item h280 span2" onclick="openLightbox('../png/photo 62.png')"><img src="../png/photo 62.png" alt=""></div>
+          <div class="img-item h280 rspan2" onclick="openLightbox('../png/photo 59.png')"><img src="../png/photo 59.png" alt=""></div>
+          <div class="img-item h280" onclick="openLightbox('../png/photo 57.png')"><img src="../png/photo 57.png" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── LIGHTBOX ── -->
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">×</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<footer>
+  <p>&copy; Takuji Tsukamoto &nbsp;—&nbsp; All Rights Reserved</p>
+</footer>
+
+<script>
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+  document.getElementById('lightbox-img').addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+</script>
+
+</body>
+</html>
