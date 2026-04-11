@@ -389,6 +389,33 @@
       transform: scale(1.5);
     }
 
+    /* ── Top Button ── */
+    #top-btn {
+      position: fixed;
+      bottom: 10px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      color: #e8e4e0;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      border: none;
+      cursor: pointer;
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    #top-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #top-btn:hover { opacity: 0.8; }
+
     /* ═══════════════════════════════════════════
        MOBILE  ≤ 768px — 横スライダーは維持、
        各カード内で縦スクロール可、アドレスバーあり
@@ -1185,6 +1212,9 @@ LPビジュアル設計とアセットデザイン</p>
   <!-- Dots -->
   <div class="dots" id="dots"></div>
 
+  <!-- Top Button -->
+  <button id="top-btn" aria-label="Back to top" onclick="goTo(0)">Top</button>
+
   <script>
     const track  = document.getElementById('track');
     const slides = track.querySelectorAll('.slide');
@@ -1226,10 +1256,13 @@ LPビジュアル設計とアセットデザイン</p>
       dotsEl.appendChild(d);
     });
 
+    const topBtn = document.getElementById('top-btn');
+
     function updateUI() {
       dotsEl.querySelectorAll('.dot').forEach((d, i) => {
         d.classList.toggle('active', i === current);
       });
+      topBtn.classList.toggle('visible', current > 0);
     }
 
     /* ── スライド移動（モバイル・デスクトップ共通） ── */
@@ -1246,8 +1279,8 @@ LPビジュアル設計とアセットデザイン</p>
     /* ── 初期位置セット ── */
     if (current > 0) {
       applyDesktopPosition(false);
-      updateUI();
     }
+    updateUI();
 
     /* ── 矢印ボタン ── */
     document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
