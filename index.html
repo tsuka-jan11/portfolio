@@ -360,6 +360,54 @@
       display: block;
     }
 
+    /* ── Media Site (Slide 2) ── */
+    .media-body {
+      grid-template-columns: 2fr 3fr;
+      gap: 28px;
+    }
+    .media-col-left {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .media-col-right {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .media-img-wrap {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+    }
+    .media-img-main {
+      position: absolute;
+      left: 0;
+      top: 6%;
+      width: 70%;
+      height: 84%;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .media-img-sub {
+      position: absolute;
+      right: 0;
+      bottom: 3%;
+      width: 48%;
+      height: 60%;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.14);
+      z-index: 1;
+    }
+    .media-img-main img,
+    .media-img-sub img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
     /* ── Arrows ── */
     .arrow {
       position: fixed;
@@ -654,6 +702,12 @@
       .usen-img { flex: none; height: auto; min-height: unset; }
       .usen-img img { height: auto; }
 
+      /* Media Site モバイル */
+      .media-body { gap: 20px; }
+      .media-col-left { min-height: unset; overflow: visible; }
+      .media-col-right { min-height: unset; overflow: visible; }
+      .media-img-wrap { flex: none; height: 72vw; }
+
       /* TOP ボタン：バッジと同サイズ・同マージン（left は JS 管理） */
       #top-btn {
         width: 28px;
@@ -730,7 +784,47 @@
         </div>
       </div>
 
-      <!-- Slide 2: イベント・展示会 (Pattern B) -->
+      <!-- Slide 2: メディアサイトデザイン -->
+      <div class="slide">
+        <div class="card card-section">
+          <div class="sec-nav">
+            <span class="sec-badge off">Ar</span>
+            <span class="sec-badge off">De</span>
+            <span class="sec-badge off">Cp</span>
+            <span class="sec-badge off">Ph</span>
+            <span class="sec-badge on">Co</span>
+            <span class="sec-badge off">Mgr</span>
+            <span class="sec-badge off">Mo</span>
+          </div>
+          <div class="sec-body media-body">
+
+            <!-- 左カラム -->
+            <div class="media-col-left">
+              <h2 class="sec-title">メディアサイトデザイン</h2>
+              <!-- 説明文 -->
+              <p class="sec-desc"></p>
+            </div>
+
+            <!-- 右カラム -->
+            <div class="media-col-right">
+              <div class="proj-header" style="justify-content: flex-end;">
+                <a class="proj-link" href="https://tspark.teamspirit.com/" target="_blank" rel="noopener noreferrer">link &gt;</a>
+              </div>
+              <div class="media-img-wrap">
+                <div class="media-img-main">
+                  <img src="png/photo76_02.png" alt="メディアサイト メイン" loading="lazy">
+                </div>
+                <div class="media-img-sub">
+                  <img src="png/photo76_03.png" alt="メディアサイト サブ" loading="lazy">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: イベント・展示会 (Pattern B) -->
       <div class="slide">
         <div class="card card-section" style="background: #dedad6;">
           <div class="sec-nav">
@@ -1439,7 +1533,49 @@ LPビジュアル設計とアセットデザイン</p>
         </div>
       </div>
 
-      <!-- Slide 20: ポスターデザイン (Pattern F) -->
+      <!-- Slide 20: LPデザイン 3枚目 -->
+      <div class="slide">
+        <div class="card card-section" style="background: #dedad6;">
+          <div class="sec-nav">
+            <span class="sec-badge on">Ar</span>
+            <span class="sec-badge on">De</span>
+            <span class="sec-badge off">Cp</span>
+            <span class="sec-badge on">Ph</span>
+            <span class="sec-badge off">Co</span>
+            <span class="sec-badge off">Mgr</span>
+            <span class="sec-badge off">Mo</span>
+          </div>
+          <div class="sec-body layout-c">
+            <div class="sec-col-left">
+              <h2 class="sec-title">LPデザイン</h2>
+              <p class="sec-desc">プロダクトやサービス施策の
+LPビジュアル設計とアセットデザイン</p>
+            </div>
+            <div class="sec-col-right" style="display: grid; grid-template-columns: 3fr 2fr; gap: 16px;">
+              <!-- メイン画像（左・大） -->
+              <div class="proj-block">
+                <div class="proj-header" style="justify-content: flex-end;">
+                  <a class="proj-link" href="https://tspark.teamspirit.com/" target="_blank" rel="noopener noreferrer">link &gt;</a>
+                </div>
+                <div class="proj-img">
+                  <img src="png/photo76_02.png" alt="LP TeamSpirit メイン" loading="lazy">
+                </div>
+              </div>
+              <!-- サブ画像（右・小・オフセット） -->
+              <div class="proj-block" style="padding-top: 14%;">
+                <div class="proj-header" style="justify-content: flex-end;">
+                  <a class="proj-link" href="https://tspark.teamspirit.com/" target="_blank" rel="noopener noreferrer">link &gt;</a>
+                </div>
+                <div class="proj-img">
+                  <img src="png/photo76_03.png" alt="LP TeamSpirit サブ" loading="lazy">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 21: ポスターデザイン (Pattern F) -->
       <div class="slide">
         <div class="card card-section" style="background: #dedad6;">
           <div class="sec-nav">
