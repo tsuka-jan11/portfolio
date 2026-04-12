@@ -336,13 +336,7 @@
     }
 
     /* ── Company Website (Slide 1) ── */
-    .sec-divider {
-      border: none;
-      border-top: 1px solid rgba(0,0,0,0.12);
-      margin: 0 0 20px;
-      flex-shrink: 0;
-    }
-    .usen-body {
+.usen-body {
       grid-template-columns: 45fr 55fr;
       gap: 28px;
     }
@@ -417,7 +411,7 @@
     /* ── Top Button ── */
     #top-btn {
       position: absolute;
-      top: 48px;
+      top: 40px;
       width: 34px;
       height: 34px;
       border-radius: 50%;
@@ -571,6 +565,10 @@
         overflow: visible;
         min-height: 0;
       }
+      /* .card と .card-section が同一要素のとき overflow: visible が上書きするのを防ぐ */
+      .card.card-section {
+        overflow-y: auto;
+      }
       .sec-nav { gap: 7px; margin-bottom: 16px; }
       .sec-badge { width: 28px; height: 28px; font-size: 0.52rem; }
 
@@ -652,6 +650,7 @@
       /* Company Website モバイル */
       .usen-body { gap: 24px; }
       .usen-spacer { display: none; }
+      .usen-col { min-height: unset; overflow: visible; }
       .usen-img { flex: none; height: auto; min-height: unset; }
       .usen-img img { height: auto; }
 
@@ -659,7 +658,7 @@
       #top-btn {
         width: 28px;
         height: 28px;
-        top: 36px;
+        top: 30px;
       }
     }
   </style>
@@ -700,7 +699,6 @@
             <span class="sec-badge off">Mgr</span>
             <span class="sec-badge off">Mo</span>
           </div>
-          <hr class="sec-divider">
           <div class="sec-body usen-body">
 
             <!-- 左カラム（45%） -->
@@ -709,7 +707,7 @@
               <p class="sec-desc">コーポレートサイトのデザイン／改修</p>
               <div class="usen-spacer"></div>
               <div class="proj-header">
-                <p class="proj-heading">https://usen.com/での<br>オーガニックCVR獲得</p>
+                <p class="proj-heading">https://usen.com/でのオーガニックCVR獲得</p>
                 <a class="proj-link" href="https://usen.com/" target="_blank" rel="noopener noreferrer">link &gt;</a>
               </div>
               <div class="usen-img usen-img-01">
@@ -720,7 +718,7 @@
             <!-- 右カラム（55%） -->
             <div class="usen-col">
               <div class="proj-header">
-                <p class="proj-heading">自社開発オリジナルPOSレジの<br>リブランディングwebリニューアル</p>
+                <p class="proj-heading">自社開発オリジナルPOSレジのリブランディングwebリニューアル</p>
                 <a class="proj-link" href="https://usen.com/service/pos/" target="_blank" rel="noopener noreferrer">link &gt;</a>
               </div>
               <div class="usen-img usen-img-02">
