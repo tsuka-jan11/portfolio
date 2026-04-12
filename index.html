@@ -479,34 +479,63 @@
       /* 左カラム：shrink解除 */
       .sec-col-left { flex-shrink: unset; min-height: unset; }
 
-      /* 右カラム（画像エリア）：固定高さで表示 */
-      .sec-col-right {
-        flex: none;
-        height: 60vw;
-        overflow: hidden;
+      /* テキスト／画像カラム：クリップせず縦に積めるように */
+      .card-section .sec-col,
+      .card-section .sec-col-left {
+        overflow: visible;
+        min-height: unset;
       }
 
-      /* 画像グリッド：高さを右カラムに合わせる */
+      /* 作品画像エリア：固定高さをやめ、1列グリッドの高さに任せる */
+      .sec-col-right {
+        flex: none;
+        height: auto;
+        min-height: unset;
+        overflow: visible;
+      }
+
+      /* 作品一覧グリッド：1列・行の高さは画像に合わせ、カード内スクロールで閲覧 */
       .img-collage,
       .img-grid-banner,
       .img-grid-two,
       .img-grid-three {
         flex: none;
-        height: 100%;
+        height: auto;
+        min-height: 0;
+        grid-template-columns: 1fr !important;
+        grid-auto-rows: auto;
+        gap: 12px;
       }
-      .img-grid-banner { grid-template-columns: repeat(3, 1fr); }
 
-      /* Company Website の特殊画像 */
-      .proj-img-right { height: 50vw; }
+      .img-item {
+        min-height: unset;
+      }
+      .img-item img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: cover;
+        aspect-ratio: auto;
+      }
+
+      /* Company Website などの大きい単体画像も縦に自然な高さで */
+      .proj-img-left,
+      .proj-img-right {
+        flex: none;
+        max-height: none;
+        height: auto;
+      }
+      .proj-img-left img,
+      .proj-img-right img {
+        height: auto;
+        max-height: none;
+        object-fit: cover;
+      }
 
       /* ドット：ナビゲーション用に表示維持 */
       .dots { bottom: 18px; gap: 4px; }
       .dot { width: 5px; height: 5px; }
       .arrow { display: none; }
-    }
-
-    @media (max-width: 480px) {
-      .img-grid-banner { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
