@@ -2400,7 +2400,7 @@ LPビジュアル設計とアセットデザイン</p>
             <div class="sec-col-left">
               <h2 class="sec-title">モーショングラフィックス</h2>
               <p class="sec-desc">AfterEffects・Premiereでの映像制作。</p>
-              <a href="#" class="proj-link" style="margin-top: 16px; display: inline-block;">デモリールはこちら ›</a>
+              <button type="button" class="reel-trigger" style="margin-top: 16px;">デモリールはこちら ›</button>
               <div class="img-collage" style="grid-template-columns: 1fr; margin-top: auto;">
                 <div class="img-item"><img src="png/photo17.png" alt="motion 1" loading="lazy"></div>
                 <div class="img-item"><img src="png/photo18.png" alt="motion 4" loading="lazy"></div>
@@ -2648,7 +2648,7 @@ LPビジュアル設計とアセットデザイン</p>
       reelVideo.currentTime = 0;
     }
 
-    reelOpenBtn.addEventListener('click', openReelModal);
+    document.querySelectorAll('.reel-trigger').forEach(btn => btn.addEventListener('click', openReelModal));
     reelCloseBtn.addEventListener('click', closeReelModal);
     reelBackdrop.addEventListener('click', closeReelModal);
 
