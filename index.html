@@ -555,8 +555,8 @@
 
     /* ── Exhibition Booth (Slide 3) ── */
     .expo-body {
-      grid-template-columns: 1fr 3fr;
-      gap: 28px;
+      grid-template-columns: 1fr 4fr;   /* テキスト20% / 画像80% */
+      gap: 24px;
     }
     .expo-col-text {
       display: flex;
@@ -573,14 +573,14 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      flex: 1;
+      flex: 3;                          /* 上段：高さ60% */
       min-height: 0;
     }
     .expo-row-three {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 8px;
-      flex: 1;
+      flex: 2;                          /* 下段：高さ40% */
       min-height: 0;
     }
     .expo-img-item {
@@ -883,7 +883,7 @@
           <div class="sec-nav" style="margin-bottom: 12px;">
             <span class="sec-badge on">Ar</span>
             <span class="sec-badge on">De</span>
-            <span class="sec-badge off">Cp</span>
+            <span class="sec-badge on">Cp</span>
             <span class="sec-badge off">Ph</span>
             <span class="sec-badge on">Co</span>
             <span class="sec-badge on">Mgr</span>
@@ -893,7 +893,7 @@
 
             <!-- 左テキストカラム -->
             <div class="expo-col-text">
-              <h2 class="sec-title">イベント・<br>展示会</h2>
+              <h2 class="sec-title">イベント・展示会</h2>
               <p class="sec-desc">ブースコンセプト立案、デザイン実務<br>ベンダーマネジメント</p>
             </div>
 
