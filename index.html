@@ -368,13 +368,26 @@
     .media-col-left {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 6px;
       min-height: 0;
     }
     .media-col-right {
       display: flex;
       flex-direction: column;
+      gap: 6px;
       min-height: 0;
+    }
+    .media-col-right-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .media-sub-label {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: #555;
     }
     .media-img-single {
       flex: 1;
@@ -389,6 +402,12 @@
       object-fit: cover;
       object-position: top;
       display: block;
+    }
+    .img-caption {
+      font-size: 0.58rem;
+      color: #888;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
     }
 
     /* ── Arrows ── */
@@ -687,9 +706,9 @@
 
       /* Media Site モバイル */
       .media-body { gap: 12px; }
-      .media-col-left { min-height: unset; overflow: visible; gap: 6px; }
-      .media-col-right { min-height: unset; overflow: visible; }
-      .media-img-single { flex: none; height: 52vw; }
+      .media-col-left { min-height: unset; overflow: visible; gap: 4px; }
+      .media-col-right { min-height: unset; overflow: visible; gap: 4px; }
+      .media-img-single { flex: none; height: 78vw; }
 
       /* TOP ボタン：バッジと同サイズ・同マージン（left は JS 管理） */
       #top-btn {
@@ -787,19 +806,22 @@
               <p class="sec-desc">プロダクトやサービス施策の
 LPビジュアル設計と
 アセットデザイン</p>
+              <a class="proj-link" href="https://tspark.teamspirit.com/" target="_blank" rel="noopener noreferrer" style="flex-shrink:0;">link &gt;</a>
               <div class="media-img-single">
                 <img src="png/photo76_03.png" alt="メディアサイト" loading="lazy">
               </div>
+              <p class="img-caption">キャプション①</p>
             </div>
 
             <!-- 右カラム -->
             <div class="media-col-right">
-              <div class="proj-header" style="justify-content: flex-end;">
-                <a class="proj-link" href="https://tspark.teamspirit.com/" target="_blank" rel="noopener noreferrer">link &gt;</a>
+              <div class="media-col-right-header">
+                <span class="media-sub-label">サービスサイトデザイン</span>
               </div>
               <div class="media-img-single">
                 <img src="png/photo76_02.png" alt="チームスピリット LP" loading="lazy">
               </div>
+              <p class="img-caption">キャプション②</p>
             </div>
 
           </div>
