@@ -381,12 +381,11 @@
       transform: scale(1.5);
     }
 
-    /* ── Top Button（body 直下／画面右上、淵から 20px＋セーフエリア。1枚目では非表示） ── */
-    #top-btn {
-      position: fixed;
-      top: calc(20px + env(safe-area-inset-top, 0px));
-      right: calc(20px + env(safe-area-inset-right, 0px));
-      bottom: auto;
+    /* ── Top Button（各 .card 右上／半分はみ出し。1枚目のみ #top-btn で display:none） ── */
+    .top-btn {
+      position: absolute;
+      top: -22px;
+      right: -22px;
       width: 44px;
       height: 44px;
       border-radius: 50%;
@@ -399,17 +398,17 @@
       border: none;
       cursor: pointer;
       z-index: 9999;
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
       padding: 0;
       transform: translateY(0);
       transition: transform 0.35s ease, opacity 0.25s ease;
     }
-    #top-btn.visible {
-      display: flex;
+    #top-btn {
+      display: none !important;
     }
-    #top-btn:hover {
+    .top-btn:hover {
       opacity: 0.92;
       transform: translateY(-3px);
     }
@@ -1551,21 +1550,23 @@ LPビジュアル設計とアセットデザイン</p>
       dotsEl.appendChild(d);
     });
 
-    /* .slider-track の transform 内では fixed が効かないため body に配置 */
-    const topBtn = document.createElement('button');
-    topBtn.id = 'top-btn';
-    topBtn.className = 'top-btn';
-    topBtn.type = 'button';
-    topBtn.setAttribute('aria-label', 'Back to top');
-    topBtn.textContent = 'Top';
-    topBtn.addEventListener('click', () => goTo(0));
-    document.body.appendChild(topBtn);
+    slides.forEach((slide, i) => {
+      const card = slide.querySelector('.card');
+      if (!card) return;
+      const btn = document.createElement('button');
+      btn.className = 'top-btn';
+      btn.type = 'button';
+      if (i === 0) btn.id = 'top-btn';
+      btn.setAttribute('aria-label', 'Back to top');
+      btn.textContent = 'Top';
+      btn.addEventListener('click', () => goTo(0));
+      card.appendChild(btn);
+    });
 
     function updateUI() {
       dotsEl.querySelectorAll('.dot').forEach((d, i) => {
         d.classList.toggle('active', i === current);
       });
-      topBtn.classList.toggle('visible', current > 0);
     }
 
     /* ── スライド移動（モバイル・デスクトップ共通） ── */
