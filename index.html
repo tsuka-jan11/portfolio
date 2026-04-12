@@ -2447,7 +2447,7 @@ LPビジュアル設計とアセットデザイン</p>
     <div class="reel-modal__backdrop" id="reel-backdrop"></div>
     <div class="reel-modal__panel">
       <button type="button" class="reel-modal__close" id="reel-close" aria-label="閉じる">×</button>
-      <video class="reel-modal__video" id="reel-video" controls playsinline preload="metadata" src="png/tsukamoto_reel.mp4">
+      <video class="reel-modal__video" id="reel-video" controls playsinline preload="none" src="png/tsukamoto_reel.mp4">
         お使いのブラウザは動画の再生に対応していません。
       </video>
     </div>
@@ -2636,6 +2636,7 @@ LPビジュアル設計とアセットデザイン</p>
       reelModal.classList.add('reel-modal--open');
       reelModal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      reelVideo.load();
       reelVideo.play().catch(() => {});
     }
 
