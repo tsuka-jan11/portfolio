@@ -376,28 +376,24 @@
       min-height: 0;
     }
     .media-img-wrap {
-      position: relative;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
       flex: 1;
       min-height: 0;
     }
     .media-img-main {
-      position: absolute;
-      left: 0;
-      top: 6%;
-      width: 70%;
-      height: 84%;
+      flex: 1.2;
+      height: 88%;
       overflow: hidden;
       box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
     .media-img-sub {
-      position: absolute;
-      right: 0;
-      bottom: 3%;
-      width: 48%;
-      height: 60%;
+      flex: 1;
+      height: 74%;
+      margin-top: auto;
       overflow: hidden;
       box-shadow: 0 6px 20px rgba(0,0,0,0.14);
-      z-index: 1;
     }
     .media-img-main img,
     .media-img-sub img {
@@ -800,9 +796,10 @@
 
             <!-- 左カラム -->
             <div class="media-col-left">
-              <h2 class="sec-title">メディアサイトデザイン</h2>
-              <!-- 説明文 -->
-              <p class="sec-desc"></p>
+              <h2 class="sec-title">LPデザイン</h2>
+              <p class="sec-desc">プロダクトやサービス施策の
+LPビジュアル設計と
+アセットデザイン</p>
             </div>
 
             <!-- 右カラム -->
