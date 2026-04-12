@@ -553,6 +553,57 @@
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
     }
 
+    /* ── Exhibition Booth (Slide 3) ── */
+    .expo-body {
+      grid-template-columns: 1fr 3fr;
+      gap: 28px;
+    }
+    .expo-col-text {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .expo-col-imgs {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+    }
+    .expo-row-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      flex: 1;
+      min-height: 0;
+    }
+    .expo-row-three {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      flex: 1;
+      min-height: 0;
+    }
+    .expo-img-item {
+      min-height: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .expo-row-two .expo-img-item,
+    .expo-row-three .expo-img-item { height: 100%; }
+    .expo-img-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+    }
+    .expo-img-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
     /* ═══════════════════════════════════════════
        MOBILE  ≤ 768px — 横スライダーは維持、
        各カード内で縦スクロール可。
@@ -671,6 +722,24 @@
         height: auto;
         max-height: none;
         object-fit: cover;
+      }
+
+      /* Exhibition Booth モバイル */
+      .expo-body { grid-template-columns: 1fr; gap: 16px; }
+      .expo-col-text { min-height: unset; overflow: visible; }
+      .expo-col-imgs { flex: none; height: auto; gap: 10px; }
+      .expo-row-two,
+      .expo-row-three {
+        display: flex;
+        flex-direction: column;
+        flex: none;
+        height: auto;
+        gap: 10px;
+      }
+      .expo-row-two .expo-img-item,
+      .expo-row-three .expo-img-item {
+        height: 54vw;
+        min-height: unset;
       }
 
       /* ドット：ナビゲーション用に表示維持 */
@@ -801,6 +870,55 @@
               </div>
               <div class="media-img-single">
                 <img src="png/photo76_03.png" alt="メディアサイト" loading="lazy">
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: イベント・展示会 -->
+      <div class="slide">
+        <div class="card card-section">
+          <div class="sec-nav" style="margin-bottom: 12px;">
+            <span class="sec-badge on">Ar</span>
+            <span class="sec-badge on">De</span>
+            <span class="sec-badge off">Cp</span>
+            <span class="sec-badge off">Ph</span>
+            <span class="sec-badge on">Co</span>
+            <span class="sec-badge on">Mgr</span>
+            <span class="sec-badge off">Mo</span>
+          </div>
+          <div class="sec-body expo-body">
+
+            <!-- 左テキストカラム -->
+            <div class="expo-col-text">
+              <h2 class="sec-title">イベント・<br>展示会</h2>
+              <p class="sec-desc">ブースコンセプト立案、デザイン実務<br>ベンダーマネジメント</p>
+            </div>
+
+            <!-- 右画像エリア -->
+            <div class="expo-col-imgs">
+              <!-- 上段：2枚 -->
+              <div class="expo-row-two">
+                <div class="expo-img-item">
+                  <img src="png/3P_01.png" alt="USEN CAFE 展示会ブース" loading="lazy">
+                </div>
+                <div class="expo-img-item">
+                  <img src="png/3P_02.png" alt="USEN DX 展示会ブース" loading="lazy">
+                </div>
+              </div>
+              <!-- 下段：3枚 -->
+              <div class="expo-row-three">
+                <div class="expo-img-item">
+                  <img src="png/3P_03.png" alt="TeamSpirit 展示会ブース 1" loading="lazy">
+                </div>
+                <div class="expo-img-item">
+                  <img src="png/3P_04.png" alt="TeamSpirit 展示会ブース 2" loading="lazy">
+                </div>
+                <div class="expo-img-item">
+                  <img src="png/3P_05.png" alt="TeamSpirit 展示会ブース 3" loading="lazy">
+                </div>
               </div>
             </div>
 
