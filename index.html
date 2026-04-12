@@ -420,6 +420,91 @@
       transform: translateY(-3px);
     }
 
+    /* ── デモリール動画モーダル（モーショングラフィックス） ── */
+    button.reel-trigger {
+      font-family: inherit;
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: #666;
+      letter-spacing: 0.04em;
+      background: none;
+      border: none;
+      padding: 0;
+      margin-top: 16px;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    button.reel-trigger:hover {
+      color: #1a1a1a;
+    }
+
+    .reel-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      padding-left: max(24px, env(safe-area-inset-left, 0px));
+      padding-right: max(24px, env(safe-area-inset-right, 0px));
+      padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.28s ease, visibility 0.28s;
+    }
+    .reel-modal.reel-modal--open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .reel-modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 22, 20, 0.78);
+      cursor: pointer;
+    }
+    .reel-modal__panel {
+      position: relative;
+      z-index: 1;
+      width: min(920px, 100%);
+      max-height: min(88dvh, 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .reel-modal__close {
+      align-self: flex-end;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: #e8e4e0;
+      color: #1a1a1a;
+      font-size: 1.35rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .reel-modal__close:hover {
+      background: #dedad6;
+    }
+    .reel-modal__video {
+      width: 100%;
+      max-height: min(78dvh, 100%);
+      height: auto;
+      border-radius: 14px;
+      background: #0a0a0a;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+    }
+
     /* ═══════════════════════════════════════════
        MOBILE  ≤ 768px — 横スライダーは維持、
        各カード内で縦スクロール可。
@@ -1221,7 +1306,7 @@ LPビジュアル設計とアセットデザイン</p>
             <div class="sec-col-left">
               <h2 class="sec-title">モーショングラフィックス</h2>
               <p class="sec-desc">AfterEffects・Premiereでの映像制作。</p>
-              <p class="proj-link" style="font-weight: 500; color: #666; margin-top: 16px;">デモリールはこちら ></p>
+              <button type="button" class="reel-trigger" id="reel-open">デモリールを視聴</button>
               <div class="img-collage" style="grid-template-columns: 1fr; margin-top: auto;">
                 <div class="img-item"><img src="png/photo17.png" alt="motion 1" loading="lazy"></div>
               </div>
@@ -1253,6 +1338,16 @@ LPビジュアル設計とアセットデザイン</p>
 
   <!-- Dots -->
   <div class="dots" id="dots"></div>
+
+  <div class="reel-modal" id="reel-modal" role="dialog" aria-modal="true" aria-label="デモリール動画" aria-hidden="true">
+    <div class="reel-modal__backdrop" id="reel-backdrop"></div>
+    <div class="reel-modal__panel">
+      <button type="button" class="reel-modal__close" id="reel-close" aria-label="閉じる">×</button>
+      <video class="reel-modal__video" id="reel-video" controls playsinline preload="metadata" src="png/tsukamoto_reel.mp4">
+        お使いのブラウザは動画の再生に対応していません。
+      </video>
+    </div>
+  </div>
 
   <script>
     const track  = document.getElementById('track');
@@ -1344,6 +1439,7 @@ LPビジュアル設計とアセットデザイン</p>
     /* ── キーボード（デスクトップのみ） ── */
     document.addEventListener('keydown', e => {
       if (isMobile()) return;
+      if (document.getElementById('reel-modal').classList.contains('reel-modal--open')) return;
       if (e.key === 'ArrowLeft')  goTo(current - 1);
       if (e.key === 'ArrowRight') goTo(current + 1);
       if (e.key === 'Home')       goTo(0);
@@ -1402,6 +1498,7 @@ LPビジュアル設計とアセットデザイン</p>
     let wheelCooldown = false;
     vp.addEventListener('wheel', e => {
       if (isMobile()) return;   // モバイルはページスクロールに任せる
+      if (document.getElementById('reel-modal').classList.contains('reel-modal--open')) return;
       e.preventDefault();
       if (wheelCooldown) return;
       wheelCooldown = true;
@@ -1410,6 +1507,38 @@ LPビジュアル設計とアセットデザイン</p>
       else if (delta < -20) goTo(current - 1);
       setTimeout(() => { wheelCooldown = false; }, 600);
     }, { passive: false });
+
+    /* ── デモリール動画モーダル ── */
+    const reelModal    = document.getElementById('reel-modal');
+    const reelVideo    = document.getElementById('reel-video');
+    const reelOpenBtn  = document.getElementById('reel-open');
+    const reelCloseBtn = document.getElementById('reel-close');
+    const reelBackdrop = document.getElementById('reel-backdrop');
+    let reelPrevOverflow = '';
+
+    function openReelModal() {
+      reelPrevOverflow = document.body.style.overflow;
+      reelModal.classList.add('reel-modal--open');
+      reelModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      reelVideo.play().catch(() => {});
+    }
+
+    function closeReelModal() {
+      reelModal.classList.remove('reel-modal--open');
+      reelModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = reelPrevOverflow;
+      reelVideo.pause();
+      reelVideo.currentTime = 0;
+    }
+
+    reelOpenBtn.addEventListener('click', openReelModal);
+    reelCloseBtn.addEventListener('click', closeReelModal);
+    reelBackdrop.addEventListener('click', closeReelModal);
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && reelModal.classList.contains('reel-modal--open')) closeReelModal();
+    });
   </script>
 
 </body>
