@@ -18,11 +18,13 @@
 
     /* ── Slider ── */
     .slider-viewport {
+      position: relative;
       width: 100vw;
       height: 100dvh;
       overflow: hidden;
     }
     .slider-track {
+      position: relative;
       display: flex;
       height: 100%;
       transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -383,14 +385,13 @@
 
     /* ── Top Button ── */
     #top-btn {
-      position: fixed;
+      position: absolute;
       top: 48px;
-      right: 56px;
       width: 34px;
       height: 34px;
       border-radius: 50%;
-      background: #c8c4c0;
-      color: #9a9590;
+      background: #E8E4E1;
+      color: #dedad7;
       font-family: 'Noto Sans JP', sans-serif;
       font-size: 0.58rem;
       font-weight: 500;
@@ -616,6 +617,13 @@
       .dots { bottom: 18px; gap: 4px; }
       .dot { width: 5px; height: 5px; }
       .arrow { display: none; }
+
+      /* TOP ボタン：バッジと同サイズ・同マージン（left は JS 管理） */
+      #top-btn {
+        width: 28px;
+        height: 28px;
+        top: 36px;
+      }
     }
   </style>
 </head>
@@ -1479,6 +1487,7 @@ LPビジュアル設計とアセットデザイン</p>
         </div>
       </div>
 
+    <button id="top-btn" type="button" aria-label="Back to top">Top</button>
     </div>
   </div>
 
@@ -1496,7 +1505,6 @@ LPビジュアル設計とアセットデザイン</p>
 
   <!-- Dots -->
   <div class="dots" id="dots"></div>
-  <button id="top-btn" type="button" aria-label="Back to top">Top</button>
 
   <div class="reel-modal" id="reel-modal" role="dialog" aria-modal="true" aria-label="デモリール動画" aria-hidden="true">
     <div class="reel-modal__backdrop" id="reel-backdrop"></div>
@@ -1552,11 +1560,18 @@ LPビジュアル設計とアセットデザイン</p>
     const topBtn = document.getElementById('top-btn');
     topBtn.addEventListener('click', () => goTo(0));
 
+    function updateTopBtn() {
+      const margin = isMobile() ? 36 : 56;
+      const size   = isMobile() ? 28 : 34;
+      topBtn.style.left = `calc(${current + 1} * 100vw - ${margin + size}px)`;
+    }
+
     function updateUI() {
       dotsEl.querySelectorAll('.dot').forEach((d, i) => {
         d.classList.toggle('active', i === current);
       });
       topBtn.classList.toggle('visible', current > 0);
+      updateTopBtn();
     }
 
     /* ── スライド移動（モバイル・デスクトップ共通） ── */
@@ -1586,6 +1601,7 @@ LPビジュアル設計とアセットデザイン</p>
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
         applyDesktopPosition(false);
+        updateTopBtn();
       }, 50);
     });
 
