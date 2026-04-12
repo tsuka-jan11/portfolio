@@ -335,6 +335,37 @@
       display: block;
     }
 
+    /* ── Company Website (Slide 1) ── */
+    .sec-divider {
+      border: none;
+      border-top: 1px solid rgba(0,0,0,0.12);
+      margin: 0 0 20px;
+      flex-shrink: 0;
+    }
+    .usen-body {
+      grid-template-columns: 45fr 55fr;
+      gap: 28px;
+    }
+    .usen-col {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .usen-spacer { flex: 1; }
+    .usen-img {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .usen-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
     /* ── Arrows ── */
     .arrow {
       position: fixed;
@@ -618,6 +649,12 @@
       .dot { width: 5px; height: 5px; }
       .arrow { display: none; }
 
+      /* Company Website モバイル */
+      .usen-body { gap: 24px; }
+      .usen-spacer { display: none; }
+      .usen-img { flex: none; height: auto; min-height: unset; }
+      .usen-img img { height: auto; }
+
       /* TOP ボタン：バッジと同サイズ・同マージン（left は JS 管理） */
       #top-btn {
         width: 28px;
@@ -654,7 +691,7 @@
       <!-- Slide 1: Company Website -->
       <div class="slide">
         <div class="card card-section">
-          <div class="sec-nav">
+          <div class="sec-nav" style="margin-bottom: 12px;">
             <span class="sec-badge on">Ar</span>
             <span class="sec-badge off">De</span>
             <span class="sec-badge off">Cp</span>
@@ -663,36 +700,34 @@
             <span class="sec-badge off">Mgr</span>
             <span class="sec-badge off">Mo</span>
           </div>
-          <div class="sec-body layout-f">
-            <div class="sec-col">
+          <hr class="sec-divider">
+          <div class="sec-body usen-body">
+
+            <!-- 左カラム（45%） -->
+            <div class="usen-col">
               <h2 class="sec-title">Company Website</h2>
               <p class="sec-desc">コーポレートサイトのデザイン／改修</p>
-              <p class="proj-heading" style="margin-bottom: 12px;">https://usen.com/での<br>オーガニックCVR獲得</p>
-              <div class="proj-img-left">
-                <img src="png/photo16.png" alt="USEN コーポレートサイト" loading="lazy">
+              <div class="usen-spacer"></div>
+              <div class="proj-header">
+                <p class="proj-heading">https://usen.com/での<br>オーガニックCVR獲得</p>
+                <a class="proj-link" href="https://usen.com/" target="_blank" rel="noopener noreferrer">link &gt;</a>
               </div>
-              <div class="img-collage" style="margin-top: 14px;">
-                <div class="img-item"><img src="png/photo16.png" alt="" loading="lazy"></div>
-                <div class="img-item"><img src="png/photo17.png" alt="" loading="lazy"></div>
-                <div class="img-item"><img src="png/photo18.png" alt="" loading="lazy"></div>
-                <div class="img-item"><img src="png/photo19.png" alt="" loading="lazy"></div>
-                <div class="img-item"><img src="png/photo16.png" alt="" loading="lazy"></div>
-                <div class="img-item"><img src="png/photo17.png" alt="" loading="lazy"></div>
+              <div class="usen-img usen-img-01">
+                <img src="png/usen_01.png" alt="USEN コーポレートサイト" loading="lazy">
               </div>
             </div>
-            <div class="sec-col">
-              <div class="proj-img-right">
-                <img src="png/photo17.png" alt="POSレジ リニューアル" loading="lazy">
+
+            <!-- 右カラム（55%） -->
+            <div class="usen-col">
+              <div class="proj-header">
+                <p class="proj-heading">自社開発オリジナルPOSレジの<br>リブランディングwebリニューアル</p>
+                <a class="proj-link" href="https://usen.com/service/pos/" target="_blank" rel="noopener noreferrer">link &gt;</a>
               </div>
-              <div class="img-collage" style="margin-top: 14px;">
-                <div class="img-item"><img src="png/photo17.png" alt="" loading="lazy"></div>
-                <div class="img-item"><img src="png/photo16.png" alt="" loading="lazy"></div>
-                <div class="img-item"><img src="png/photo19.png" alt="" loading="lazy"></div>
-                <div class="img-item"><img src="png/photo18.png" alt="" loading="lazy"></div>
-                <div class="img-item"><img src="png/photo17.png" alt="" loading="lazy"></div>
-                <div class="img-item"><img src="png/photo16.png" alt="" loading="lazy"></div>
+              <div class="usen-img usen-img-02">
+                <img src="png/usen_02.png" alt="POSレジ リニューアル" loading="lazy">
               </div>
             </div>
+
           </div>
         </div>
       </div>
