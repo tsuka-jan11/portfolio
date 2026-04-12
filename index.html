@@ -422,12 +422,21 @@
 
     /* ═══════════════════════════════════════════
        MOBILE  ≤ 768px — 横スライダーは維持、
-       各カード内で縦スクロール可、アドレスバーあり
+       各カード内で縦スクロール可。
+       body は overflow-y: auto + min-height を少し超えることで、
+       ブラウザのアドレスバー／UI を再表示しやすくする。
     ═══════════════════════════════════════════ */
     @media (max-width: 768px) {
 
-      /* svh = stable viewport height（アドレスバーあり前提） */
-      body { height: 100svh; }
+      html { overflow-x: hidden; }
+
+      /* svh = ツールバー表示時に近い安定高さ。+1px で縦に僅かにスクロール可能に */
+      body {
+        height: auto;
+        min-height: calc(100svh + 1px);
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
       .slider-viewport { height: 100svh; }
       .slide { height: 100svh; padding: 16px 16px 50px; }
 
