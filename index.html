@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *:hover { transform: none !important; opacity: 1 !important; filter: none !important; box-shadow: none !important; background: inherit !important; color: inherit !important; }
 
     body {
       font-family: 'Noto Sans JP', sans-serif;
@@ -297,11 +298,6 @@
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.10);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .img-item:hover {
-      transform: scale(1.03);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     }
     .img-item img {
       width: 100%;
@@ -402,9 +398,7 @@
       padding: 12px;
       cursor: pointer;
       opacity: 0.4;
-      transition: opacity 0.25s;
     }
-    .arrow:hover { opacity: 0.9; }
     .arrow-prev { left: 20px; }
     .arrow-next { right: 20px; }
 
@@ -484,9 +478,6 @@
       text-decoration: underline;
       text-underline-offset: 3px;
     }
-    button.reel-trigger:hover {
-      color: #1a1a1a;
-    }
 
     .reel-modal {
       position: fixed;
@@ -541,9 +532,6 @@
       justify-content: center;
       padding: 0;
     }
-    .reel-modal__close:hover {
-      background: #dedad6;
-    }
     .reel-modal__video {
       width: 100%;
       max-height: min(78dvh, 100%);
@@ -588,14 +576,9 @@
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .expo-row-two .expo-img-item,
     .expo-row-three .expo-img-item { height: 100%; }
-    .expo-img-item:hover {
-      transform: scale(1.02);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.15);
-    }
     .expo-img-item img {
       width: 100%;
       height: 100%;
