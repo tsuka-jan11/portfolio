@@ -595,18 +595,25 @@
     }
 
     /* ── 各種クリエイティブ (Slide 4) ── */
+    .other-body {
+      grid-template-columns: 180px 1fr;
+      gap: 24px;
+      align-items: start;
+      overflow: visible;
+      flex: none;           /* 画像の固定高さに合わせるため flex:1 を解除 */
+    }
+    .other-col-text {
+      display: flex;
+      flex-direction: column;
+    }
     .other-pc-img {
-      flex: 1;
-      min-height: 0;
-      border-radius: 12px;
-      overflow: hidden;
+      overflow: visible;
     }
     .other-pc-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center;
+      height: 83dvh;        /* カードからはみ出す大きさ */
+      width: auto;
       display: block;
+      border-radius: 10px;
     }
     .other-sp-list {
       display: none;
@@ -776,6 +783,8 @@
       }
 
       /* 各種クリエイティブ モバイル */
+      .other-body { grid-template-columns: 1fr; height: auto; flex: none; }
+      .other-col-text { min-height: unset; }
       .other-pc-img { display: none; }
       .other-sp-list {
         display: flex;
@@ -783,6 +792,7 @@
         gap: 12px;
         flex: none;
         height: auto;
+        margin-top: 16px;
       }
       .other-sp-item {
         width: 100%;
@@ -959,24 +969,31 @@
       <!-- Slide 4: 各種クリエイティブ -->
       <div class="slide">
         <div class="card card-section">
-          <div class="sec-nav" style="margin-bottom: 12px;">
-            <span class="sec-badge on">Ar</span>
-            <span class="sec-badge on">De</span>
-            <span class="sec-badge on">Cp</span>
-            <span class="sec-badge off">Ph</span>
-            <span class="sec-badge on">Co</span>
-            <span class="sec-badge off">Mgr</span>
-            <span class="sec-badge off">Mo</span>
-          </div>
-          <h2 class="sec-title">各種クリエイティブ</h2>
-          <p class="sec-desc" style="margin-bottom: 12px;">LP・セミナーパーツ・各種広告</p>
+          <div class="sec-body other-body">
 
-          <!-- PC：合成画像1枚 -->
-          <div class="other-pc-img">
-            <img src="png/slide4-other/other_PC_all.png" alt="各種クリエイティブ" loading="lazy">
+            <!-- 左：テキスト -->
+            <div class="other-col-text">
+              <div class="sec-nav" style="margin-bottom: 12px;">
+                <span class="sec-badge on">Ar</span>
+                <span class="sec-badge on">De</span>
+                <span class="sec-badge on">Cp</span>
+                <span class="sec-badge off">Ph</span>
+                <span class="sec-badge on">Co</span>
+                <span class="sec-badge off">Mgr</span>
+                <span class="sec-badge off">Mo</span>
+              </div>
+              <h2 class="sec-title">各種クリエイティブ</h2>
+              <p class="sec-desc">LP・セミナーパーツ・各種広告</p>
+            </div>
+
+            <!-- 右：PC合成画像 -->
+            <div class="other-pc-img">
+              <img src="png/slide4-other/other_PC_all.png" alt="各種クリエイティブ" loading="lazy">
+            </div>
+
           </div>
 
-          <!-- SP：素材をナンバー順に縦並べ -->
+          <!-- SP：素材をナンバー順に縦並べ（PCでは非表示） -->
           <div class="other-sp-list">
             <div class="other-sp-item"><img src="png/slide4-other/other_01.png" alt="Conference Session バナー" loading="lazy"></div>
             <div class="other-sp-item"><img src="png/slide4-other/other_02.png" alt="USEN MUSIC バナー" loading="lazy"></div>
@@ -984,7 +1001,6 @@
             <div class="other-sp-item"><img src="png/slide4-other/other_04.png" alt="Fair Music Fair Pay ポスター" loading="lazy"></div>
             <div class="other-sp-item"><img src="png/slide4-other/other_05.png" alt="外食経営塾 バナー" loading="lazy"></div>
             <div class="other-sp-item"><img src="png/slide4-other/other_06.png" alt="USENレジ パンフレット" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide4-other/other_07.png" alt="USEN 採用サイト" loading="lazy"></div>
           </div>
 
         </div>
