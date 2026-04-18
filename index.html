@@ -596,24 +596,37 @@
 
     /* ── 各種クリエイティブ (Slide 4) ── */
     .other-body {
-      grid-template-columns: 180px 1fr;
-      gap: 24px;
-      align-items: start;
-      overflow: visible;
-      flex: none;           /* 画像の固定高さに合わせるため flex:1 を解除 */
+      grid-template-columns: 45fr 55fr;
+      gap: 28px;
+    }
+    .other-col-left {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .other-col-right {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
     .other-col-text {
       display: flex;
       flex-direction: column;
+      flex-shrink: 0;
     }
     .other-pc-img {
-      overflow: visible;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
     }
     .other-pc-img img {
-      height: 83dvh;        /* カードからはみ出す大きさ */
-      width: auto;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
       display: block;
-      border-radius: 10px;
     }
     .other-sp-list {
       display: none;
@@ -784,6 +797,8 @@
 
       /* 各種クリエイティブ モバイル */
       .other-body { grid-template-columns: 1fr; height: auto; flex: none; }
+      .other-col-left { min-height: unset; overflow: visible; }
+      .other-col-right { display: none; }
       .other-col-text { min-height: unset; }
       .other-pc-img { display: none; }
       .other-sp-list {
@@ -971,24 +986,31 @@
         <div class="card card-section">
           <div class="sec-body other-body">
 
-            <!-- 左：テキスト -->
-            <div class="other-col-text">
-              <div class="sec-nav" style="margin-bottom: 12px;">
-                <span class="sec-badge on">Ar</span>
-                <span class="sec-badge on">De</span>
-                <span class="sec-badge on">Cp</span>
-                <span class="sec-badge off">Ph</span>
-                <span class="sec-badge on">Co</span>
-                <span class="sec-badge off">Mgr</span>
-                <span class="sec-badge off">Mo</span>
+            <!-- 左：テキスト + 画像01 -->
+            <div class="other-col-left">
+              <div class="other-col-text">
+                <div class="sec-nav" style="margin-bottom: 12px;">
+                  <span class="sec-badge on">Ar</span>
+                  <span class="sec-badge on">De</span>
+                  <span class="sec-badge on">Cp</span>
+                  <span class="sec-badge off">Ph</span>
+                  <span class="sec-badge on">Co</span>
+                  <span class="sec-badge off">Mgr</span>
+                  <span class="sec-badge off">Mo</span>
+                </div>
+                <h2 class="sec-title">各種クリエイティブ</h2>
+                <p class="sec-desc">LP・セミナーパーツ・各種広告</p>
               </div>
-              <h2 class="sec-title">各種クリエイティブ</h2>
-              <p class="sec-desc">LP・セミナーパーツ・各種広告</p>
+              <div class="other-pc-img">
+                <img src="png/slide4-other/other_PC_01.png" alt="各種クリエイティブ 01" loading="lazy">
+              </div>
             </div>
 
-            <!-- 右：PC合成画像 -->
-            <div class="other-pc-img">
-              <img src="png/slide4-other/other_PC_all.png" alt="各種クリエイティブ" loading="lazy">
+            <!-- 右：画像02 -->
+            <div class="other-col-right">
+              <div class="other-pc-img">
+                <img src="png/slide4-other/other_PC_02.png" alt="各種クリエイティブ 02" loading="lazy">
+              </div>
             </div>
 
           </div>
