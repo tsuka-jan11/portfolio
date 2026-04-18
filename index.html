@@ -594,6 +594,66 @@
       display: block;
     }
 
+    /* ── 各種クリエイティブ (Slide 4) ── */
+    .other-body {
+      grid-template-columns: 1fr 3fr;
+      gap: 24px;
+    }
+    .other-col-text {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .other-img-banner {
+      flex: 1;
+      min-height: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      margin-top: 12px;
+    }
+    .other-img-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+    .other-col-imgs {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+    }
+    .other-row-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      flex: 3;
+      min-height: 0;
+    }
+    .other-row-bottom {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      flex: 2;
+      min-height: 0;
+    }
+    .other-img-item {
+      min-height: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      height: 100%;
+    }
+    .other-img-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
     /* ═══════════════════════════════════════════
        MOBILE  ≤ 768px — 横スライダーは維持、
        各カード内で縦スクロール可。
@@ -756,6 +816,25 @@
         height: 28px;
         top: 30px;
       }
+
+      /* 各種クリエイティブ モバイル */
+      .other-body { grid-template-columns: 1fr; gap: 16px; }
+      .other-col-text { min-height: unset; overflow: visible; }
+      .other-img-banner { flex: none; height: 48vw; margin-top: 10px; }
+      .other-col-imgs { flex: none; height: auto; gap: 10px; }
+      .other-row-top,
+      .other-row-bottom {
+        display: flex;
+        flex-direction: column;
+        flex: none;
+        height: auto;
+        gap: 10px;
+      }
+      .other-row-top .other-img-item,
+      .other-row-bottom .other-img-item {
+        height: 54vw;
+        min-height: unset;
+      }
     }
   </style>
 </head>
@@ -908,6 +987,62 @@
                 </div>
                 <div class="expo-img-item">
                   <img src="png/slide3-expo/3P_05.png" alt="TeamSpirit 展示会ブース 3" loading="lazy">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Slide 4: 各種クリエイティブ -->
+      <div class="slide">
+        <div class="card card-section">
+          <div class="sec-nav" style="margin-bottom: 12px;">
+            <span class="sec-badge on">Ar</span>
+            <span class="sec-badge on">De</span>
+            <span class="sec-badge on">Cp</span>
+            <span class="sec-badge off">Ph</span>
+            <span class="sec-badge on">Co</span>
+            <span class="sec-badge off">Mgr</span>
+            <span class="sec-badge off">Mo</span>
+          </div>
+          <div class="sec-body other-body">
+
+            <!-- 左カラム -->
+            <div class="other-col-text">
+              <h2 class="sec-title">各種クリエイティブ</h2>
+              <p class="sec-desc">LP・セミナーパーツ・各種広告</p>
+              <div class="other-img-banner">
+                <img src="png/slide4-other/other_02.png" alt="USEN MUSIC バナー" loading="lazy">
+              </div>
+            </div>
+
+            <!-- 右画像エリア -->
+            <div class="other-col-imgs">
+              <!-- 上段：2枚（大） -->
+              <div class="other-row-top">
+                <div class="other-img-item">
+                  <img src="png/slide4-other/other_04.png" alt="Fair Music Fair Pay ポスター" loading="lazy">
+                </div>
+                <div class="other-img-item">
+                  <img src="png/slide4-other/other_07.png" alt="USEN 採用サイト" loading="lazy">
+                </div>
+              </div>
+              <!-- 下段：4枚（小） -->
+              <div class="other-row-bottom">
+                <div class="other-img-item">
+                  <img src="png/slide4-other/other_01.png" alt="セミナー バナー" loading="lazy">
+                </div>
+                <div class="other-img-item">
+                  <img src="png/slide4-other/other_03.png" alt="リーダーシップ論 バナー" loading="lazy">
+                </div>
+                <div class="other-img-item">
+                  <img src="png/slide4-other/other_05.png" alt="外食経営塾 バナー" loading="lazy">
+                </div>
+                <div class="other-img-item">
+                  <img src="png/slide4-other/other_06.png" alt="USENレジ パンフレット" loading="lazy">
                 </div>
               </div>
             </div>
