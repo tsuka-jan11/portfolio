@@ -253,7 +253,6 @@
     .proj-img {
       flex: 1;
       min-height: 0;
-      border-radius: 10px;
       overflow: hidden;
     }
     .proj-img img {
@@ -302,7 +301,6 @@
     .img-item {
       width: 100%;
       min-height: 0;
-      border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.10);
     }
@@ -318,13 +316,11 @@
       flex: 1;
       min-height: 0;
       max-height: 56dvh;
-      border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.12);
     }
     .proj-img-right {
       height: 74dvh;
-      border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.12);
       align-self: flex-start;
@@ -384,7 +380,6 @@
       flex: 1;
       min-height: 0;
       overflow: hidden;
-      border-radius: 4px;
     }
     .media-img-single img {
       width: 100%;
@@ -543,7 +538,6 @@
       width: 100%;
       max-height: min(78dvh, 100%);
       height: auto;
-      border-radius: 14px;
       background: #0a0a0a;
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
     }
@@ -580,7 +574,6 @@
     }
     .expo-img-item {
       min-height: 0;
-      border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 16px rgba(0,0,0,0.10);
     }
@@ -614,11 +607,19 @@
       display: flex;
       flex-direction: column;
     }
+    .other-pc-img {
+      display: flex;
+      align-items: flex-start;
+    }
     .other-pc-img img {
-      width: 100%;
+      max-width: 100%;
+      max-height: calc(100dvh - 180px);
+      width: auto;
       height: auto;
       display: block;
-      border-radius: 10px;
+    }
+    .other-col-left .other-pc-img img {
+      max-height: calc(100dvh - 300px);
     }
     .other-sp-list {
       display: none;
@@ -803,7 +804,6 @@
       }
       .other-sp-item {
         width: 100%;
-        border-radius: 8px;
         overflow: hidden;
         box-shadow: 0 4px 16px rgba(0,0,0,0.10);
       }
@@ -1015,6 +1015,60 @@
             <div class="other-sp-item"><img src="png/slide4-other/other_04.png" alt="Fair Music Fair Pay ポスター" loading="lazy"></div>
             <div class="other-sp-item"><img src="png/slide4-other/other_05.png" alt="外食経営塾 バナー" loading="lazy"></div>
             <div class="other-sp-item"><img src="png/slide4-other/other_06.png" alt="USENレジ パンフレット" loading="lazy"></div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- Slide 5: アイキャッチ・バナーデザイン -->
+      <div class="slide">
+        <div class="card card-section">
+          <div class="sec-body other-body">
+
+            <!-- 左：テキスト + 画像01 -->
+            <div class="other-col-left">
+              <div class="other-col-text">
+                <div class="sec-nav" style="margin-bottom: 12px;">
+                  <span class="sec-badge on">Ar</span>
+                  <span class="sec-badge on">De</span>
+                  <span class="sec-badge on">Cp</span>
+                  <span class="sec-badge on">Ph</span>
+                  <span class="sec-badge off">Co</span>
+                  <span class="sec-badge off">Mgr</span>
+                  <span class="sec-badge off">Mo</span>
+                </div>
+                <h2 class="sec-title">アイキャッチ・バナーデザイン</h2>
+                <p class="sec-desc">WEBサイト・SNS向け各種バナーデザイン</p>
+              </div>
+              <div class="other-pc-img">
+                <img src="png/slide5-banner/slide5-banner_01.png" alt="バナーデザイン 01" loading="lazy">
+              </div>
+            </div>
+
+            <!-- 右：画像02 -->
+            <div class="other-col-right">
+              <div class="other-pc-img">
+                <img src="png/slide5-banner/slide5-banner_02.png" alt="バナーデザイン 02" loading="lazy">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- SP：全素材を縦並べ（PCでは非表示） -->
+          <div class="other-sp-list">
+            <div class="other-sp-item"><img src="png/slide5-banner/photo107.png" alt="バナー 107" loading="lazy"></div>
+            <div class="other-sp-item"><img src="png/slide5-banner/photo108.png" alt="バナー 108" loading="lazy"></div>
+            <div class="other-sp-item"><img src="png/slide5-banner/photo109.png" alt="バナー 109" loading="lazy"></div>
+            <div class="other-sp-item"><img src="png/slide5-banner/photo110.png" alt="バナー 110" loading="lazy"></div>
+            <div class="other-sp-item"><img src="png/slide5-banner/photo111.png" alt="バナー 111" loading="lazy"></div>
+            <div class="other-sp-item"><img src="png/slide5-banner/photo112.png" alt="バナー 112" loading="lazy"></div>
+            <div class="other-sp-item"><img src="png/slide5-banner/photo113.png" alt="バナー 113" loading="lazy"></div>
+            <div class="other-sp-item"><img src="png/slide5-banner/photo115.png" alt="バナー 115" loading="lazy"></div>
+            <div class="other-sp-item"><img src="png/slide5-banner/photo116.png" alt="バナー 116" loading="lazy"></div>
+            <div class="other-sp-item"><img src="png/slide5-banner/photo117.png" alt="バナー 117" loading="lazy"></div>
+            <div class="other-sp-item"><img src="png/slide5-banner/photo118.png" alt="バナー 118" loading="lazy"></div>
+            <div class="other-sp-item"><img src="png/slide5-banner/photo119.png" alt="バナー 119" loading="lazy"></div>
           </div>
 
         </div>
