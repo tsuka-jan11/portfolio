@@ -3,1381 +3,598 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>portfolio</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <title>TAKUJI TSUKAMOTO — Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    @media (hover: hover) {
-      *:hover { transition: none !important; }
-    }
     a { color: inherit; text-decoration: none; }
-    a:hover { color: inherit !important; text-decoration: none !important; }
+
+    :root {
+      --bg:       #efeeee;
+      --card:     #e2deda;
+      --text:     #1a1a1a;
+      --sub:      #7a7571;
+      --accent:   #2a2420;
+      --line:     rgba(42,36,32,.1);
+      --on-bg:    #2a2420;
+      --off-bg:   #c4c0bc;
+      --off-txt:  #9a9590;
+    }
 
     body {
       font-family: 'Noto Sans JP', sans-serif;
-      background: #e8e4e0;
-      color: #1a1a1a;
-      height: 100dvh;
-      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
     }
 
-    /* ── Slider ── */
-    .slider-viewport {
-      position: relative;
-      width: 100vw;
-      height: 100dvh;
-      overflow: hidden;
+    /* ── Header ── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      padding: 20px 48px 0;
     }
-    .slider-track {
-      position: relative;
+
+    .header-top {
       display: flex;
-      height: 100%;
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      align-items: baseline;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
     }
 
-    .slide {
-      width: 100vw;
-      min-width: 100vw;
-      max-width: 100vw;
-      height: 100%;
+    .site-name {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.30em;
+      color: var(--accent);
+    }
+
+    .site-meta {
+      display: flex;
+      gap: 24px;
+      font-size: 0.60rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      color: var(--sub);
+    }
+
+    /* ── Filter nav ── */
+    .filter-nav {
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .filter-nav::-webkit-scrollbar { display: none; }
+
+    .filter-nav + .filter-nav {
+      border-top: 1px solid var(--line);
+    }
+
+    .filter-btn {
       flex-shrink: 0;
-      padding: 32px 52px 56px;   /* PC: card inset. bottom includes dot strip */
-      overflow: visible;
-    }
-    .card {
-      width: 100%;
-      height: 100%;
-      background: #dedad6;
-      border-radius: 32px;
-      overflow: visible;
-      position: relative;
-    }
-
-    /* ── Cover card ── */
-    .card-cover {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 0 7% 7%;
-    }
-    .hero-name {
-      font-size: clamp(0.58rem, 0.9vw, 0.72rem);
-      font-weight: 300;
-      letter-spacing: 0.26em;
-      color: #3a3530;
-      margin-bottom: 6px;
-    }
-    .hero-title {
-      font-size: clamp(2.6rem, 5.5vw, 4.8rem);
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      color: #1a1a1a;
-      line-height: 1;
-      margin-bottom: 14px;
-    }
-    .hero-years {
-      font-size: clamp(0.65rem, 1vw, 0.82rem);
+      background: none;
+      border: none;
+      padding: 12px 22px;
+      font-family: inherit;
+      font-size: 0.58rem;
       font-weight: 300;
       letter-spacing: 0.22em;
-      color: #3a3530;
-      margin-bottom: 18px;
+      text-transform: uppercase;
+      color: var(--sub);
+      cursor: pointer;
+      position: relative;
+      transition: color .2s;
     }
-    .hero-wf-label {
-      font-size: clamp(0.65rem, 0.9vw, 0.8rem);
-      font-weight: 300;
+    .filter-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 22px; right: 22px;
+      height: 1.5px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform .25s ease;
+    }
+    .filter-btn.active { color: var(--accent); font-weight: 500; }
+    .filter-btn.active::after { transform: scaleX(1); }
+
+    .company-btn {
+      font-size: 0.56rem;
+      padding: 10px 20px;
       letter-spacing: 0.16em;
-      color: #3a3530;
-      margin-bottom: 16px;
     }
-    .wf-grid {
-      display: grid;
-      grid-template-columns: max-content max-content;
-      gap: 14px 52px;
-      overflow: hidden;
-    }
-    @media (max-width: 480px) {
-      .wf-grid {
-        grid-template-columns: 1fr;   /* single column on small phones */
-        gap: 10px;
-      }
-      .wf-label { white-space: normal; }
-    }
-    .wf-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .wf-badge {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #2a2420;
-      color: #fff;
-      font-size: 0.58rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .wf-label {
-      font-size: clamp(0.62rem, 0.85vw, 0.76rem);
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      color: #1a1a1a;
-      white-space: nowrap;
+    .company-btn::after { left: 20px; right: 20px; }
+
+    /* ── Main ── */
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 48px 80px;
     }
 
-    /* ── Section card ── */
-    .card-section {
-      display: flex;
-      flex-direction: column;
-      padding: 28px 36px 40px;
-      overflow: visible;
-    }
-    .sec-nav {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 22px;
-      flex-shrink: 0;
-    }
-    .sec-badge {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      font-size: 0.58rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .sec-badge.on  { background: #2a2420; color: #fff; }
-    .sec-badge.off { background: #c8c4c0; color: #9a9590; }
-
-    .sec-body {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 5fr 7fr;
-      gap: 24px;
-      min-height: 0;
-      align-items: stretch;
-    }
-
-    /* ── Layout patterns ── */
-    .sec-body.layout-b {
-      grid-template-columns: 1fr 2fr;
-    }
-    .sec-body.layout-c {
-      grid-template-columns: 1fr 2fr;
-    }
-    .sec-body.layout-d {
-      grid-template-columns: 1fr 2.5fr;
-    }
-    .sec-body.layout-e {
-      grid-template-columns: 1fr 2fr;
-    }
-    .sec-body.layout-f {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .sec-col {
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      overflow: hidden;
-    }
-    .sec-col-left {
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      flex-shrink: 0;
-    }
-    .sec-col-right {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
-    }
-
-    .sec-title {
-      font-size: clamp(1.3rem, 2vw, 1.8rem);
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      line-height: 1.2;
-      margin-bottom: 10px;
-    }
-    .sec-desc {
-      font-size: clamp(0.68rem, 0.95vw, 0.8rem);
-      font-weight: 400;
-      color: #666;
-      letter-spacing: 0.06em;
-      margin-bottom: 20px;
-      white-space: pre-wrap;
-    }
-
-    .proj-block {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-height: 0;
-    }
-    .proj-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-    .proj-heading {
-      font-size: clamp(0.66rem, 0.95vw, 0.82rem);
-      font-weight: 400;
-      line-height: 1.65;
-      color: #1a1a1a;
-    }
-    .proj-link {
-      font-size: 0.68rem;
-      color: #666;
-      white-space: nowrap;
-      letter-spacing: 0.04em;
-      text-decoration: none;
-      flex-shrink: 0;
-      padding-top: 2px;
-    }
-    .proj-img {
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
-    }
-    .proj-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top;
-      display: block;
-      loading: lazy;
-    }
-
-    /* ── Image grid layouts ── */
-    .img-collage {
-      flex: 1;
+    /* ── Grid ── */
+    .project-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 1fr;
-      gap: 10px;
-      min-height: 0;
-    }
-    .img-grid-banner {
-      flex: 1;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 1fr;
-      gap: 8px;
-      min-height: 0;
-    }
-    .img-grid-two {
-      flex: 1;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 1fr;
-      gap: 10px;
-      min-height: 0;
-    }
-    .img-grid-three {
-      flex: 1;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 1fr;
-      gap: 10px;
-      min-height: 0;
-    }
-
-    .img-item {
-      width: 100%;
-      min-height: 0;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.10);
-    }
-    .img-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* ── Company Website: collage images ── */
-    .proj-img-left {
-      flex: 1;
-      min-height: 0;
-      max-height: 56dvh;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-    }
-    .proj-img-right {
-      height: 74dvh;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-      align-self: flex-start;
-    }
-    .proj-img-left img,
-    .proj-img-right img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top;
-      display: block;
-    }
-
-    /* ── Company Website (Slide 1) ── */
-.usen-body {
-      grid-template-columns: 45fr 55fr;
-      gap: 28px;
-    }
-    .usen-col {
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-    .usen-spacer { flex: 0; min-height: 14px; }
-    .usen-img {
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    }
-    .usen-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top;
-      display: block;
-    }
-
-    /* ── Media Site (Slide 2) ── */
-    .media-body {
-      grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
-    .media-col-left {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-height: 0;
+
+    /* ── Card ── */
+    .project-card {
+      cursor: pointer;
     }
-    .media-col-right {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-height: 0;
-    }
-    .media-img-single {
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
-    }
-    .media-img-single img {
+    .project-card.out { display: none; }
+
+    .card-img img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top;
+      height: auto;
       display: block;
     }
 
-    /* ── Arrows ── */
-    .arrow {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 20;
-      background: none;
-      border: none;
-      padding: 12px;
-      cursor: pointer;
-      opacity: 0.4;
+    .card-body {
+      padding: 14px 18px 20px;
     }
-    .arrow-prev { left: 20px; }
-    .arrow-next { right: 20px; }
 
-    /* ── Dots — in bottom gap between card and viewport edge ── */
-    .dots {
-      position: fixed;
-      bottom: 12px;          /* centred in the bottom padding strip */
-      left: 50%;
-      transform: translateX(-50%);
+    .card-badges {
       display: flex;
-      flex-direction: row;
-      align-items: center;
       gap: 5px;
-      z-index: 10;
-    }
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #c0b8b0;
-      border: none;
-      outline: none;
-      box-shadow: none;
-      padding: 0;
-      appearance: none;
-      -webkit-appearance: none;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-    }
-    .dot.active {
-      background: #3d3028;
-      transform: scale(1.5);
+      margin-bottom: 10px;
     }
 
-    /* ── Top Button ── */
-    #top-btn {
-      position: absolute;
-      top: 40px;
-      width: 34px;
-      height: 34px;
+    .badge {
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
-      background: #E8E4E1;
-      color: #C7C7C7;
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      border: none;
-      cursor: pointer;
-      z-index: 10;
+      font-size: 0.50rem;
+      font-weight: 600;
+      letter-spacing: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
+      flex-shrink: 0;
     }
-    #top-btn.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .badge.on  { background: var(--on-bg);  color: #fff; }
+    .badge.off { background: var(--off-bg); color: var(--off-txt); }
 
-    /* ── デモリール動画モーダル（モーショングラフィックス） ── */
-    button.reel-trigger {
-      font-family: inherit;
-      font-size: 0.68rem;
+    .card-title {
+      font-size: 0.92rem;
       font-weight: 500;
-      color: #666;
-      letter-spacing: 0.04em;
-      background: none;
-      border: none;
-      padding: 0;
-      margin-top: 16px;
-      cursor: pointer;
-      text-align: left;
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      letter-spacing: 0.02em;
+      line-height: 1.4;
+      margin-bottom: 5px;
     }
 
-    .reel-modal {
+    .card-company {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      color: var(--sub);
+      margin-bottom: 4px;
+    }
+
+    .card-desc {
+      font-size: 0.63rem;
+      font-weight: 300;
+      color: var(--sub);
+      letter-spacing: 0.06em;
+      line-height: 1.7;
+    }
+
+    /* ── Modal ── */
+    .modal {
       position: fixed;
       inset: 0;
-      z-index: 10000;
+      z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
-      padding-left: max(24px, env(safe-area-inset-left, 0px));
-      padding-right: max(24px, env(safe-area-inset-right, 0px));
-      padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.28s ease, visibility 0.28s;
+      transition: opacity .25s, visibility .25s;
     }
-    .reel-modal.reel-modal--open {
+    .modal.open {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
     }
-    .reel-modal__backdrop {
+    .modal-backdrop {
       position: absolute;
       inset: 0;
-      background: rgba(26, 22, 20, 0.78);
+      background: rgba(26,22,20,.78);
       cursor: pointer;
     }
-    .reel-modal__panel {
+    .modal-panel {
       position: relative;
       z-index: 1;
-      width: min(920px, 100%);
-      max-height: min(88dvh, 100%);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      width: min(860px, 100%);
+      max-height: 90dvh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
-    .reel-modal__close {
-      align-self: flex-end;
-      flex-shrink: 0;
-      width: 40px;
-      height: 40px;
-      border: none;
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: #e8e4e0;
-      color: #1a1a1a;
-      font-size: 1.35rem;
-      line-height: 1;
+      background: rgba(232,228,224,.9);
+      color: var(--accent);
+      border: none;
       cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0;
+      z-index: 2;
     }
-    .reel-modal__video {
+    .modal-img img {
       width: 100%;
-      max-height: min(78dvh, 100%);
-      height: auto;
-      background: #0a0a0a;
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
-    }
-
-    /* ── Exhibition Booth (Slide 3) ── */
-    .expo-body {
-      grid-template-columns: 1fr 4fr;   /* テキスト20% / 画像80% */
-      gap: 24px;
-    }
-    .expo-col-text {
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-    .expo-col-imgs {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-height: 0;
-    }
-    .expo-row-two {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      flex: 3;                          /* 上段：高さ60% */
-      min-height: 0;
-    }
-    .expo-row-three {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      flex: 2;                          /* 下段：高さ40% */
-      min-height: 0;
-    }
-    .expo-img-item {
-      min-height: 0;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-    }
-    .expo-row-two .expo-img-item,
-    .expo-row-three .expo-img-item { height: 100%; }
-    .expo-img-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
-
-    /* ── 各種クリエイティブ (Slide 4) ── */
-    .other-body {
-      grid-template-columns: 45fr 55fr;
-      gap: 28px;
-      align-items: start;
-      flex: none;
-    }
-    .other-col-left {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .other-col-right {
-      display: flex;
-      flex-direction: column;
-    }
-    .other-col-text {
-      display: flex;
-      flex-direction: column;
-    }
-    .other-pc-img {
-      display: flex;
-      align-items: flex-start;
-    }
-    .other-pc-img img {
-      max-width: 100%;
-      max-height: calc(100dvh - 180px);
-      width: auto;
       height: auto;
       display: block;
     }
-    .other-col-left .other-pc-img img {
-      max-height: calc(100dvh - 300px);
-    }
-    .other-sp-list {
-      display: none;
-    }
 
-    /* ═══════════════════════════════════════════
-       MOBILE  ≤ 768px — 横スライダーは維持、
-       各カード内で縦スクロール可。
-       body は overflow-y: auto + min-height を少し超えることで、
-       ブラウザのアドレスバー／UI を再表示しやすくする。
-    ═══════════════════════════════════════════ */
+    /* ── Mobile ── */
     @media (max-width: 768px) {
-
-      html { overflow-x: hidden; }
-
-      /* svh = ツールバー表示時に近い安定高さ。+1px で縦に僅かにスクロール可能に */
-      body {
-        height: auto;
-        min-height: calc(100svh + 1px);
-        overflow-x: hidden;
-        overflow-y: auto;
-      }
-      .slider-viewport { height: 100svh; }
-      .slide { height: 100svh; padding: 10px 16px 36px; }
-
-      /* カード：高さはスライドに合わせ、内側で縦スクロール */
-      .card {
-        min-height: 0;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior-y: contain;
-        touch-action: pan-y;
-        border-radius: 24px;
-      }
-
-      /* カバーカード */
-      .card-cover {
-        min-height: 80svh;
-        justify-content: flex-end;
-        padding: 0 8% 10%;
-      }
-
-      /* セクションカード：コンテンツが溢れてカードがスクロールできるよう overflow: visible */
-      .card-section {
-        padding: 20px 20px 28px;
-        overflow: visible;
-        min-height: 0;
-      }
-      /* .card と .card-section が同一要素のとき overflow: visible が上書きするのを防ぐ */
-      .card.card-section {
-        overflow-y: auto;
-      }
-      .sec-nav { gap: 7px; margin-bottom: 16px; }
-      .sec-badge { width: 28px; height: 28px; font-size: 0.52rem; }
-
-      /* 2カラム → 1カラム、高さauto（コンテンツ量で決まる） */
-      .sec-body,
-      .sec-body.layout-b,
-      .sec-body.layout-c,
-      .sec-body.layout-d,
-      .sec-body.layout-e,
-      .sec-body.layout-f {
-        grid-template-columns: 1fr;
-        height: auto;
-        flex: none;
-        min-height: unset;
-        gap: 16px;
-      }
-
-      /* 左カラム：shrink解除 */
-      .sec-col-left { flex-shrink: unset; min-height: unset; }
-
-      /* テキスト／画像カラム：クリップせず縦に積めるように */
-      .card-section .sec-col,
-      .card-section .sec-col-left {
-        overflow: visible;
-        min-height: unset;
-      }
-
-      /* 作品画像エリア：固定高さをやめ、1列グリッドの高さに任せる */
-      .sec-col-right {
-        flex: none;
-        height: auto;
-        min-height: unset;
-        overflow: visible;
-      }
-
-      /* 作品一覧グリッド：1列・行の高さは画像に合わせ、カード内スクロールで閲覧 */
-      .img-collage,
-      .img-grid-banner,
-      .img-grid-two,
-      .img-grid-three {
-        flex: none;
-        height: auto;
-        min-height: 0;
-        grid-template-columns: 1fr !important;
-        grid-auto-rows: auto;
-        gap: 12px;
-      }
-
-      .img-item {
-        min-height: unset;
-      }
-      .img-item img {
-        width: 100%;
-        height: auto;
-        max-height: none;
-        object-fit: cover;
-        aspect-ratio: auto;
-      }
-
-      /* Company Website などの大きい単体画像も縦に自然な高さで */
-      .proj-img-left,
-      .proj-img-right {
-        flex: none;
-        max-height: none;
-        height: auto;
-      }
-      .proj-img-left img,
-      .proj-img-right img {
-        height: auto;
-        max-height: none;
-        object-fit: cover;
-      }
-
-      /* Exhibition Booth モバイル */
-      .expo-body { grid-template-columns: 1fr; gap: 16px; }
-      .expo-col-text { min-height: unset; overflow: visible; }
-      .expo-col-imgs { flex: none; height: auto; gap: 10px; }
-      .expo-row-two,
-      .expo-row-three {
-        display: flex;
-        flex-direction: column;
-        flex: none;
-        height: auto;
-        gap: 10px;
-      }
-      .expo-row-two .expo-img-item,
-      .expo-row-three .expo-img-item {
-        height: 54vw;
-        min-height: unset;
-      }
-
-      /* ドット：ナビゲーション用に表示維持 */
-      .dots { bottom: 12px; gap: 4px; }
-      .dot { width: 5px; height: 5px; }
-      .arrow { display: none; }
-
-      /* Company Website モバイル */
-      .usen-body { gap: 24px; }
-      .usen-spacer { display: none; }
-      .usen-col { min-height: unset; overflow: visible; }
-      .usen-img { flex: none; height: auto; min-height: unset; }
-      .usen-img img { height: auto; }
-
-      /* Media Site モバイル */
-      .media-body { gap: 12px; }
-      .media-col-left { min-height: unset; overflow: visible; gap: 4px; }
-      .media-col-right { min-height: unset; overflow: visible; gap: 4px; }
-      .media-img-single { flex: none; height: 78vw; }
-
-      /* TOP ボタン：バッジと同サイズ・同マージン（left は JS 管理） */
-      #top-btn {
-        width: 28px;
-        height: 28px;
-        top: 30px;
-      }
-
-      /* 各種クリエイティブ モバイル */
-      .other-body { grid-template-columns: 1fr; height: auto; flex: none; }
-      .other-col-left { min-height: unset; overflow: visible; }
-      .other-col-right { display: none; }
-      .other-col-text { min-height: unset; }
-      .other-pc-img { display: none; }
-      .other-sp-list {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        flex: none;
-        height: auto;
-        margin-top: 16px;
-      }
-      .other-sp-item {
-        width: 100%;
-        overflow: hidden;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-      }
-      .other-sp-item img {
-        width: 100%;
-        height: auto;
-        display: block;
-      }
+      .site-header { padding: 14px 20px 0; }
+      .site-meta   { display: none; }
+      .filter-btn  { padding: 10px 14px; font-size: 0.54rem; letter-spacing: 0.14em; }
+      main         { padding: 20px 16px 60px; }
+      .project-grid { grid-template-columns: 1fr; gap: 14px; }
+      .card-body   { padding: 12px 14px 16px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="slider-viewport">
-    <div class="slider-track" id="track">
-
-      <!-- Slide 0: Cover -->
-      <div class="slide">
-        <div class="card card-cover">
-          <p class="hero-name">T A K U J I &nbsp; T S U K A M O T O</p>
-          <h1 class="hero-title">PORTFOLIO</h1>
-          <p class="hero-years">2 0 2 2 - 2 0 2 6</p>
-          <p class="hero-wf-label">Workflow category</p>
-          <div class="wf-grid">
-            <div class="wf-item"><span class="wf-badge">Ar</span><span class="wf-label">Art Direction</span></div>
-            <div class="wf-item"><span class="wf-badge">De</span><span class="wf-label">Design</span></div>
-            <div class="wf-item"><span class="wf-badge">Cp</span><span class="wf-label">Copy Writing</span></div>
-            <div class="wf-item"><span class="wf-badge">Ph</span><span class="wf-label">Photo Direction</span></div>
-            <div class="wf-item"><span class="wf-badge">Co</span><span class="wf-label">Concept planning</span></div>
-            <div class="wf-item"><span class="wf-badge">Mgr</span><span class="wf-label">Progress Management</span></div>
-            <div class="wf-item"><span class="wf-badge">Mo</span><span class="wf-label">Motion Graphics</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Slide 1: Company Website -->
-      <div class="slide">
-        <div class="card card-section">
-          <div class="sec-nav" style="margin-bottom: 12px;">
-            <span class="sec-badge on">Ar</span>
-            <span class="sec-badge on">De</span>
-            <span class="sec-badge off">Cp</span>
-            <span class="sec-badge off">Ph</span>
-            <span class="sec-badge on">Co</span>
-            <span class="sec-badge off">Mgr</span>
-            <span class="sec-badge off">Mo</span>
-          </div>
-          <div class="sec-body usen-body">
-
-            <!-- 左カラム（45%） -->
-            <div class="usen-col">
-              <h2 class="sec-title">Company Website</h2>
-              <p class="sec-desc">コーポレートサイトのデザイン／改修</p>
-              <div class="usen-spacer"></div>
-              <div class="proj-header">
-                <p class="proj-heading">https://usen.com/でのオーガニックCVR獲得</p>
-                <a class="proj-link" href="https://usen.com/" target="_blank" rel="noopener noreferrer">link &gt;</a>
-              </div>
-              <div class="usen-img usen-img-01">
-                <img src="png/slide1-website/usen_01.png" alt="USEN コーポレートサイト" loading="lazy">
-              </div>
-            </div>
-
-            <!-- 右カラム（55%） -->
-            <div class="usen-col">
-              <div class="proj-header">
-                <p class="proj-heading">自社開発オリジナルPOSレジwebリニューアル</p>
-                <a class="proj-link" href="https://usen.com/service/pos/" target="_blank" rel="noopener noreferrer">link &gt;</a>
-              </div>
-              <div class="usen-img usen-img-02">
-                <img src="png/slide1-website/usen_02.png" alt="POSレジ リニューアル" loading="lazy">
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- Slide 2: メディアサイトデザイン -->
-      <div class="slide">
-        <div class="card card-section">
-          <div class="sec-nav">
-            <span class="sec-badge on">Ar</span>
-            <span class="sec-badge on">De</span>
-            <span class="sec-badge off">Cp</span>
-            <span class="sec-badge on">Ph</span>
-            <span class="sec-badge on">Co</span>
-            <span class="sec-badge on">Mgr</span>
-            <span class="sec-badge off">Mo</span>
-          </div>
-          <div class="sec-body media-body">
-
-            <!-- 左カラム -->
-            <div class="media-col-left">
-              <h2 class="sec-title">LPデザイン</h2>
-              <p class="sec-desc">プロダクトやサービス施策のLPビジュアル設計とアセットデザイン</p>
-              <div class="proj-header">
-                <p class="proj-heading">サービスサイトデザイン</p>
-              </div>
-              <div class="media-img-single">
-                <img src="png/slide2-lp/photo76_02.png" alt="チームスピリット LP" loading="lazy">
-              </div>
-            </div>
-
-            <!-- 右カラム -->
-            <div class="media-col-right">
-              <div class="proj-header">
-                <p class="proj-heading">自社オウンドメディア</p>
-                <a class="proj-link" href="https://tspark.teamspirit.com/" target="_blank" rel="noopener noreferrer">link &gt;</a>
-              </div>
-              <div class="media-img-single">
-                <img src="png/slide2-lp/photo76_03.png" alt="メディアサイト" loading="lazy">
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- Slide 3: イベント・展示会 -->
-      <div class="slide">
-        <div class="card card-section">
-          <div class="sec-nav" style="margin-bottom: 12px;">
-            <span class="sec-badge on">Ar</span>
-            <span class="sec-badge on">De</span>
-            <span class="sec-badge on">Cp</span>
-            <span class="sec-badge off">Ph</span>
-            <span class="sec-badge on">Co</span>
-            <span class="sec-badge on">Mgr</span>
-            <span class="sec-badge off">Mo</span>
-          </div>
-          <div class="sec-body expo-body">
-
-            <!-- 左テキストカラム -->
-            <div class="expo-col-text">
-              <h2 class="sec-title">イベント・展示会</h2>
-              <p class="sec-desc">ブースコンセプト立案、デザイン実務<br>ベンダーマネジメント</p>
-            </div>
-
-            <!-- 右画像エリア -->
-            <div class="expo-col-imgs">
-              <!-- 上段：2枚 -->
-              <div class="expo-row-two">
-                <div class="expo-img-item">
-                  <img src="png/slide3-expo/3P_01.png" alt="USEN CAFE 展示会ブース" loading="lazy">
-                </div>
-                <div class="expo-img-item">
-                  <img src="png/slide3-expo/3P_02.png" alt="USEN DX 展示会ブース" loading="lazy">
-                </div>
-              </div>
-              <!-- 下段：3枚 -->
-              <div class="expo-row-three">
-                <div class="expo-img-item">
-                  <img src="png/slide3-expo/3P_03.png" alt="TeamSpirit 展示会ブース 1" loading="lazy">
-                </div>
-                <div class="expo-img-item">
-                  <img src="png/slide3-expo/3P_04.png" alt="TeamSpirit 展示会ブース 2" loading="lazy">
-                </div>
-                <div class="expo-img-item">
-                  <img src="png/slide3-expo/3P_05.png" alt="TeamSpirit 展示会ブース 3" loading="lazy">
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-
-      <!-- Slide 4: 各種クリエイティブ -->
-      <div class="slide">
-        <div class="card card-section">
-          <div class="sec-body other-body">
-
-            <!-- 左：テキスト + 画像01 -->
-            <div class="other-col-left">
-              <div class="other-col-text">
-                <div class="sec-nav" style="margin-bottom: 12px;">
-                  <span class="sec-badge on">Ar</span>
-                  <span class="sec-badge on">De</span>
-                  <span class="sec-badge on">Cp</span>
-                  <span class="sec-badge off">Ph</span>
-                  <span class="sec-badge on">Co</span>
-                  <span class="sec-badge off">Mgr</span>
-                  <span class="sec-badge off">Mo</span>
-                </div>
-                <h2 class="sec-title">各種クリエイティブ</h2>
-                <p class="sec-desc">LP・セミナーパーツ・各種広告</p>
-              </div>
-              <div class="other-pc-img">
-                <img src="png/slide4-other/other_PC_01.png" alt="各種クリエイティブ 01" loading="lazy">
-              </div>
-            </div>
-
-            <!-- 右：画像02 -->
-            <div class="other-col-right">
-              <div class="other-pc-img">
-                <img src="png/slide4-other/other_PC_02.png" alt="各種クリエイティブ 02" loading="lazy">
-              </div>
-            </div>
-
-          </div>
-
-          <!-- SP：素材をナンバー順に縦並べ（PCでは非表示） -->
-          <div class="other-sp-list">
-            <div class="other-sp-item"><img src="png/slide4-other/other_01.png" alt="Conference Session バナー" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide4-other/other_02.png" alt="USEN MUSIC バナー" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide4-other/other_03.png" alt="リーダーシップ論 バナー（小）" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide4-other/other_04.png" alt="Fair Music Fair Pay ポスター" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide4-other/other_05.png" alt="外食経営塾 バナー" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide4-other/other_06.png" alt="USENレジ パンフレット" loading="lazy"></div>
-          </div>
-
-        </div>
-      </div>
-
-
-      <!-- Slide 5: アイキャッチ・バナーデザイン -->
-      <div class="slide">
-        <div class="card card-section">
-          <div class="sec-body other-body">
-
-            <!-- 左：テキスト + 画像01 -->
-            <div class="other-col-left">
-              <div class="other-col-text">
-                <div class="sec-nav" style="margin-bottom: 12px;">
-                  <span class="sec-badge on">Ar</span>
-                  <span class="sec-badge on">De</span>
-                  <span class="sec-badge on">Cp</span>
-                  <span class="sec-badge on">Ph</span>
-                  <span class="sec-badge off">Co</span>
-                  <span class="sec-badge off">Mgr</span>
-                  <span class="sec-badge off">Mo</span>
-                </div>
-                <h2 class="sec-title">アイキャッチ・バナーデザイン</h2>
-                <p class="sec-desc">WEBサイト・SNS向け各種バナーデザイン</p>
-              </div>
-              <div class="other-pc-img">
-                <img src="png/slide5-banner/slide5-banner_01.png" alt="バナーデザイン 01" loading="lazy">
-              </div>
-            </div>
-
-            <!-- 右：画像02 -->
-            <div class="other-col-right">
-              <div class="other-pc-img">
-                <img src="png/slide5-banner/slide5-banner_02.png" alt="バナーデザイン 02" loading="lazy">
-              </div>
-            </div>
-
-          </div>
-
-          <!-- SP：全素材を縦並べ（PCでは非表示） -->
-          <div class="other-sp-list">
-            <div class="other-sp-item"><img src="png/slide5-banner/photo107.png" alt="バナー 107" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide5-banner/photo108.png" alt="バナー 108" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide5-banner/photo109.png" alt="バナー 109" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide5-banner/photo110.png" alt="バナー 110" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide5-banner/photo111.png" alt="バナー 111" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide5-banner/photo112.png" alt="バナー 112" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide5-banner/photo113.png" alt="バナー 113" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide5-banner/photo115.png" alt="バナー 115" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide5-banner/photo116.png" alt="バナー 116" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide5-banner/photo117.png" alt="バナー 117" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide5-banner/photo118.png" alt="バナー 118" loading="lazy"></div>
-            <div class="other-sp-item"><img src="png/slide5-banner/photo119.png" alt="バナー 119" loading="lazy"></div>
-          </div>
-
-        </div>
-      </div>
-
-
-    <button id="top-btn" type="button" aria-label="Back to top">Top</button>
+<header class="site-header">
+  <div class="header-top">
+    <span class="site-name">T A K U J I &nbsp; T S U K A M O T O</span>
+    <div class="site-meta">
+      <span>Art Direction / Design / Copy</span>
+      <span>2022 — 2026</span>
     </div>
   </div>
+  <nav class="filter-nav" id="cat-nav">
+    <button class="filter-btn active" data-f="all">ALL</button>
+    <button class="filter-btn" data-f="web">WEB / LP</button>
+    <button class="filter-btn" data-f="art">ART DIRECTION</button>
+    <button class="filter-btn" data-f="brand">BRANDING</button>
+    <button class="filter-btn" data-f="event">EVENT / PRINT</button>
+    <button class="filter-btn" data-f="motion">MOTION</button>
+  </nav>
+  <nav class="filter-nav" id="co-nav">
+    <button class="filter-btn company-btn active" data-co="all">ALL</button>
+    <button class="filter-btn company-btn" data-co="ts">TeamSpirit</button>
+    <button class="filter-btn company-btn" data-co="glv">Gulliver</button>
+  </nav>
+</header>
 
-  <!-- Arrows -->
-  <button class="arrow arrow-prev" id="prev">
-    <svg width="11" height="20" viewBox="0 0 11 20" fill="none" stroke="#3d3028" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="9,2 2,10 9,18"/>
-    </svg>
-  </button>
-  <button class="arrow arrow-next" id="next">
-    <svg width="11" height="20" viewBox="0 0 11 20" fill="none" stroke="#3d3028" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="2,2 9,10 2,18"/>
-    </svg>
-  </button>
+<main>
+  <div class="project-grid" id="grid">
 
-  <!-- Dots -->
-  <div class="dots" id="dots"></div>
+    <!-- 02 TeamSpirit -->
+    <article class="project-card" data-c="web" data-co="ts">
+      <div class="card-img"><img src="test/2x/アートボード 2@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge on">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">TeamSpirit</p>
+        <h2 class="card-title">アイキャッチ・バナーデザイン</h2>
+        <p class="card-desc">WEBサイト・SNS向け各種バナービジュアル制作</p>
+      </div>
+    </article>
 
-  <div class="reel-modal" id="reel-modal" role="dialog" aria-modal="true" aria-label="デモリール動画" aria-hidden="true">
-    <div class="reel-modal__backdrop" id="reel-backdrop"></div>
-    <div class="reel-modal__panel">
-      <button type="button" class="reel-modal__close" id="reel-close" aria-label="閉じる">×</button>
-      <video class="reel-modal__video" id="reel-video" controls playsinline preload="none" src="png/tsukamoto_reel.mp4">
-        お使いのブラウザは動画の再生に対応していません。
-      </video>
+    <!-- 03 TeamSpirit -->
+    <article class="project-card" data-c="art" data-co="ts">
+      <div class="card-img"><img src="test/2x/アートボード 3@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">TeamSpirit</p>
+        <h2 class="card-title">セールスマテリアル リプレイス</h2>
+        <p class="card-desc">営業資料の統一アセット・ガイドライン作成・デザインのリファイン</p>
+      </div>
+    </article>
+
+    <!-- 04 TeamSpirit -->
+    <article class="project-card" data-c="art" data-co="ts">
+      <div class="card-img"><img src="test/2x/アートボード 4@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">TeamSpirit</p>
+        <h2 class="card-title">KV・イメージボード・コンセプト</h2>
+        <p class="card-desc">プロダクト施策・サービス施策のビジュアルイメージ作成</p>
+      </div>
+    </article>
+
+    <!-- 05 TeamSpirit -->
+    <article class="project-card" data-c="brand" data-co="ts">
+      <div class="card-img"><img src="test/2x/アートボード 5@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">TeamSpirit</p>
+        <h2 class="card-title">Rebranding_1</h2>
+        <p class="card-desc">自社プロダクトVIロゴのリブランディング・ガイドライン策定・レギュレーションの策定</p>
+      </div>
+    </article>
+
+    <!-- 06 TeamSpirit -->
+    <article class="project-card" data-c="brand" data-co="ts">
+      <div class="card-img"><img src="test/2x/アートボード 6@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">TeamSpirit</p>
+        <h2 class="card-title">Rebranding_2</h2>
+        <p class="card-desc">リブランディングに伴う各マテリアルの制作・自社オリジナルイラストの策定</p>
+      </div>
+    </article>
+
+    <!-- 07 TeamSpirit -->
+    <article class="project-card" data-c="brand" data-co="ts">
+      <div class="card-img"><img src="test/2x/アートボード 7@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">TeamSpirit</p>
+        <h2 class="card-title">ロゴデザイン</h2>
+        <p class="card-desc">オウンドメディア立ち上げに伴うメディアタイトルロゴ制作</p>
+      </div>
+    </article>
+
+    <!-- 08 TeamSpirit -->
+    <article class="project-card" data-c="web" data-co="ts">
+      <div class="card-img"><img src="test/2x/アートボード 8@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">TeamSpirit</p>
+        <h2 class="card-title">LPデザイン</h2>
+        <p class="card-desc">プロダクトやサービス施策のLPビジュアル設計とアセットデザイン</p>
+      </div>
+    </article>
+
+    <!-- 09 TeamSpirit -->
+    <article class="project-card" data-c="event" data-co="ts">
+      <div class="card-img"><img src="test/2x/アートボード 9@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge on">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">TeamSpirit</p>
+        <h2 class="card-title">イベントパーツデザイン</h2>
+        <p class="card-desc">イベント時のデザインやポスター撮影手配からディレクション立ち合い・レタッチ含む販下作成のクリエイティブ実務</p>
+      </div>
+    </article>
+
+    <!-- 10 Gulliver -->
+    <article class="project-card" data-c="art" data-co="glv">
+      <div class="card-img"><img src="test/2x/アートボード 10@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">Gulliver</p>
+        <h2 class="card-title">KV・イメージボード・コンセプト①</h2>
+        <p class="card-desc">自社内月次キャンペーンのビジュアルまたはサービス施策のビジュアルイメージ作成</p>
+      </div>
+    </article>
+
+    <!-- 11 Gulliver -->
+    <article class="project-card" data-c="art" data-co="glv">
+      <div class="card-img"><img src="test/2x/アートボード 11@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">Gulliver</p>
+        <h2 class="card-title">KV・イメージボード・コンセプト②</h2>
+        <p class="card-desc">自社内月次キャンペーンのビジュアルまたはサービス施策のビジュアルイメージ作成</p>
+      </div>
+    </article>
+
+    <!-- 12 Gulliver -->
+    <article class="project-card" data-c="art" data-co="glv">
+      <div class="card-img"><img src="test/2x/アートボード 12@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">Gulliver</p>
+        <h2 class="card-title">KV・イメージボード・コンセプト③</h2>
+        <p class="card-desc">自社内月次キャンペーンのビジュアルまたはサービス施策のビジュアルイメージ作成</p>
+      </div>
+    </article>
+
+    <!-- 13 Gulliver -->
+    <article class="project-card" data-c="brand" data-co="glv">
+      <div class="card-img"><img src="test/2x/アートボード 13@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">Gulliver</p>
+        <h2 class="card-title">Rebranding</h2>
+        <p class="card-desc">自社 VIロゴのリブランディング・ガイドライン策定・レギュレーションの策定</p>
+      </div>
+    </article>
+
+    <!-- 14 Gulliver -->
+    <article class="project-card" data-c="event" data-co="glv">
+      <div class="card-img"><img src="test/2x/アートボード 14@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">Gulliver</p>
+        <h2 class="card-title">オフラインツール①</h2>
+        <p class="card-desc">オープンやキャンペーンのチラシやフライヤー等紙媒体ツールの制作経験</p>
+      </div>
+    </article>
+
+    <!-- 15 Gulliver -->
+    <article class="project-card" data-c="event" data-co="glv">
+      <div class="card-img"><img src="test/2x/アートボード 15@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">Gulliver</p>
+        <h2 class="card-title">オフラインツール②</h2>
+        <p class="card-desc">ギミック性のあるツールを多く経験。サービスやプロダクトを訴求の意匠</p>
+      </div>
+    </article>
+
+    <!-- 16 Gulliver -->
+    <article class="project-card" data-c="event" data-co="glv">
+      <div class="card-img"><img src="test/2x/アートボード 16@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">Gulliver</p>
+        <h2 class="card-title">オフラインツール③</h2>
+        <p class="card-desc">組版や印刷の知識も併せ持ち、制約のある世界観やガイドラインのなかでもビジュアルの幅を追求</p>
+      </div>
+    </article>
+
+    <!-- 17 Gulliver -->
+    <article class="project-card" data-c="web" data-co="glv">
+      <div class="card-img"><img src="test/2x/アートボード 17@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">Gulliver</p>
+        <h2 class="card-title">LPデザイン</h2>
+        <p class="card-desc">プロダクトやサービス施策のLPビジュアル設計とアセットデザイン</p>
+      </div>
+    </article>
+
+    <!-- 18 Gulliver -->
+    <article class="project-card" data-c="event" data-co="glv">
+      <div class="card-img"><img src="test/2x/アートボード 18@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">Gulliver</p>
+        <h2 class="card-title">ポスターデザイン</h2>
+        <p class="card-desc">集客・求人・CPなどあらゆる訴求文脈にあわせたデザインを考えます</p>
+      </div>
+    </article>
+
+    <!-- 19 Gulliver motion -->
+    <article class="project-card" data-c="motion" data-co="glv" data-video="motion/tsukamoto_reel.mp4">
+      <div class="card-img"><img src="test/2x/アートボード 19@2x.png" alt="" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge on">Mo</span>
+        </div>
+        <p class="card-company">Gulliver</p>
+        <h2 class="card-title">モーショングラフィックス</h2>
+        <p class="card-desc">AfterEffects・Premiereでの映像制作。絵コンテから実制作まで。デモリールはドライブにて別途共有</p>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-panel">
+    <button class="modal-close" id="modal-close" aria-label="閉じる">×</button>
+    <div class="modal-img" id="modal-img-wrap"><img id="modal-img" src="" alt=""></div>
+    <div class="modal-video-wrap" id="modal-video-wrap" style="display:none">
+      <video id="modal-video" controls playsinline preload="none" style="width:100%;height:auto;display:block;"></video>
     </div>
   </div>
+</div>
 
-  <script>
-    const track  = document.getElementById('track');
-    const dotsEl = document.getElementById('dots');
-    const mq     = window.matchMedia('(max-width: 768px)');
+<script>
+  const cards      = document.querySelectorAll('.project-card');
+  const modal          = document.getElementById('modal');
+  const modalImg       = document.getElementById('modal-img');
+  const modalImgWrap   = document.getElementById('modal-img-wrap');
+  const modalVideo     = document.getElementById('modal-video');
+  const modalVideoWrap = document.getElementById('modal-video-wrap');
 
-    /* ── 実スライドを取得してから両端にクローンを追加（無限ループ用） ── */
-    const realSlides = Array.from(track.querySelectorAll('.slide'));
-    const total = realSlides.length;
-    const cloneLast  = realSlides[total - 1].cloneNode(true);
-    const cloneFirst = realSlides[0].cloneNode(true);
-    track.insertBefore(cloneLast, realSlides[0]); // visual 0
-    track.appendChild(cloneFirst);               // visual total+1
-    // 視覚的並び: [cloneLast, slide0, slide1, ..., slideLast, cloneFirst]
-    // current(実インデックス) → visualPos = current + 1
-
-    const hashIndex = parseInt(location.hash.replace('#', ''), 10);
-    let current     = (!isNaN(hashIndex) && hashIndex >= 0 && hashIndex < total) ? hashIndex : 0;
-    let isAnimating = false;
-
-    function isMobile() { return mq.matches; }
-    function vp_idx() { return current + 1; }
-
-    function applyDesktopPosition(animate) {
-      if (animate === false) track.style.transition = 'none';
-      track.style.transform = `translateX(calc(-${vp_idx()} * 100vw))`;
-      if (animate === false) {
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          track.style.transition = '';
-        }));
-      }
+  function openModal(card) {
+    const videoSrc = card.dataset.video;
+    if (videoSrc) {
+      modalImgWrap.style.display   = 'none';
+      modalVideoWrap.style.display = 'block';
+      modalVideo.src = videoSrc;
+      modalVideo.load();
+    } else {
+      modalImgWrap.style.display   = 'block';
+      modalVideoWrap.style.display = 'none';
+      modalImg.src = card.querySelector('.card-img img').src;
+      modalImg.alt = card.querySelector('.card-title').textContent;
     }
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
 
-    function snapInstant(vi) {
-      track.style.transition = 'none';
-      track.style.transform = `translateX(calc(-${vi} * 100vw))`;
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        track.style.transition = '';
-      }));
-    }
+  function closeModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    modalVideo.pause();
+    modalVideo.src = '';
+  }
 
-    /* ── ドット生成 ── */
-    realSlides.forEach((_, i) => {
-      const d = document.createElement('button');
-      d.className = 'dot' + (i === current ? ' active' : '');
-      d.setAttribute('aria-label', `Slide ${i + 1}`);
-      d.addEventListener('click', () => goTo(i));
-      dotsEl.appendChild(d);
+  cards.forEach(card => card.addEventListener('click', () => openModal(card)));
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.getElementById('modal-backdrop').addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+  let activeCat = 'all';
+  let activeCo  = 'all';
+
+  function applyFilter() {
+    cards.forEach(card => {
+      const matchCat = activeCat === 'all' || card.dataset.c === activeCat;
+      const matchCo  = activeCo  === 'all' || card.dataset.co.split(' ').includes(activeCo);
+      card.classList.toggle('out', !matchCat || !matchCo);
     });
+  }
 
-    const topBtn = document.getElementById('top-btn');
-    topBtn.addEventListener('click', () => goTo(0));
-
-    function updateTopBtn() {
-      const margin = isMobile() ? 36 : 56;
-      const size   = isMobile() ? 28 : 34;
-      topBtn.style.left = `calc(${vp_idx() + 1} * 100vw - ${margin + size}px)`;
-    }
-
-    function updateUI() {
-      dotsEl.querySelectorAll('.dot').forEach((d, i) => {
-        d.classList.toggle('active', i === current);
-      });
-      topBtn.classList.toggle('visible', current > 0);
-      updateTopBtn();
-    }
-
-    /* ── スライド移動（無限ループ対応） ── */
-    function goTo(index) {
-      if (isAnimating) return;
-      isAnimating = true;
-
-      let vi;
-      if (index >= total) {
-        vi = total + 1;   // cloneFirst へアニメ → その後 slide0 へ瞬間移動
-        current = 0;
-      } else if (index < 0) {
-        vi = 0;           // cloneLast へアニメ → その後 slideLast へ瞬間移動
-        current = total - 1;
-      } else {
-        current = index;
-        vi = vp_idx();
-      }
-
-      track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      track.style.transform = `translateX(calc(-${vi} * 100vw))`;
-      history.replaceState(null, '', '#' + current);
-      updateUI();
-
-      setTimeout(() => {
-        if (vi === total + 1 || vi === 0) snapInstant(vp_idx());
-        isAnimating = false;
-      }, 520);
-    }
-
-    /* ── 初期位置セット ── */
-    applyDesktopPosition(false);
-    updateUI();
-
-    /* ── 矢印ボタン ── */
-    document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
-    document.getElementById('next').addEventListener('click', () => goTo(current + 1));
-
-    /* ── リサイズ ── */
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        applyDesktopPosition(false);
-        updateTopBtn();
-      }, 50);
+  document.querySelectorAll('#cat-nav .filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#cat-nav .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCat = btn.dataset.f;
+      applyFilter();
     });
+  });
 
-    /* ── キーボード（デスクトップのみ） ── */
-    document.addEventListener('keydown', e => {
-      if (isMobile()) return;
-      if (document.getElementById('reel-modal').classList.contains('reel-modal--open')) return;
-      if (e.key === 'ArrowLeft')  goTo(current - 1);
-      if (e.key === 'ArrowRight') goTo(current + 1);
-      if (e.key === 'Home')       goTo(0);
-      if (e.key === 'End')        goTo(total - 1);
+  document.querySelectorAll('#co-nav .filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#co-nav .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCo = btn.dataset.co;
+      applyFilter();
     });
-
-    /* ── タッチスワイプ ── */
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchTracking = false;
-    const vp = document.querySelector('.slider-viewport');
-
-    function touchTargetCardCanScrollVertically(target) {
-      const card = target && target.closest && target.closest('.card');
-      if (!card) return false;
-      return card.scrollHeight > card.clientHeight + 2;
-    }
-
-    function setTrackOffset(dx) {
-      track.style.transition = 'none';
-      const base = -vp_idx() * window.innerWidth;
-      track.style.transform = `translateX(${base + dx}px)`;
-    }
-
-    function snapToSlide(index) {
-      let vi;
-      if (index >= total)  { current = 0;          vi = total + 1; }
-      else if (index < 0)  { current = total - 1;  vi = 0; }
-      else                 { current = index;       vi = vp_idx(); }
-
-      track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      track.style.transform = `translateX(calc(-${vi} * 100vw))`;
-      history.replaceState(null, '', '#' + current);
-      updateUI();
-      isAnimating = true;
-      setTimeout(() => {
-        if (vi === total + 1 || vi === 0) snapInstant(vp_idx());
-        isAnimating = false;
-      }, 520);
-    }
-
-    vp.addEventListener('touchstart', e => {
-      if (isAnimating) return;
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-      touchTracking = false;
-    }, { passive: true });
-
-    vp.addEventListener('touchmove', e => {
-      const dx = e.touches[0].clientX - touchStartX;
-      const dy = e.touches[0].clientY - touchStartY;
-
-      if (!touchTracking) {
-        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
-        if (touchTargetCardCanScrollVertically(e.target) && Math.abs(dy) >= Math.abs(dx)) return;
-        if (Math.abs(dx) > Math.abs(dy)) {
-          touchTracking = true;
-        } else {
-          return;
-        }
-      }
-
-      e.preventDefault();
-      setTrackOffset(dx);
-    }, { passive: false });
-
-    vp.addEventListener('touchend', e => {
-      if (!touchTracking) return;
-      touchTracking = false;
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      const threshold = window.innerWidth * 0.15;
-      if (Math.abs(dx) > threshold) {
-        snapToSlide(dx < 0 ? current + 1 : current - 1);
-      } else {
-        snapToSlide(current);
-      }
-    }, { passive: true });
-
-    /* ── マウスドラッグ（デスクトップのみ） ── */
-    let dragStartX = 0;
-    let dragging   = false;
-    let dragMoved  = false;
-
-    vp.addEventListener('mousedown', e => {
-      if (isMobile() || isAnimating) return;
-      dragStartX = e.clientX;
-      dragging   = true;
-      dragMoved  = false;
-    });
-    vp.addEventListener('mousemove', e => {
-      if (!dragging) return;
-      e.preventDefault();
-      const dx = e.clientX - dragStartX;
-      if (!dragMoved && Math.abs(dx) > 5) dragMoved = true;
-      if (dragMoved) setTrackOffset(dx);
-    }, { passive: false });
-    window.addEventListener('mouseup', e => {
-      if (!dragging) return;
-      dragging = false;
-      if (isMobile() || !dragMoved) return;
-      dragMoved = false;
-      const dx = e.clientX - dragStartX;
-      const threshold = window.innerWidth * 0.15;
-      if (Math.abs(dx) > threshold) {
-        snapToSlide(dx < 0 ? current + 1 : current - 1);
-      } else {
-        snapToSlide(current);
-      }
-    });
-    vp.addEventListener('dragstart', e => e.preventDefault());
-
-    /* ── マウスホイール（デスクトップのみ） ── */
-    let wheelCooldown = false;
-    vp.addEventListener('wheel', e => {
-      if (isMobile()) return;   // モバイルはページスクロールに任せる
-      if (document.getElementById('reel-modal').classList.contains('reel-modal--open')) return;
-      e.preventDefault();
-      if (wheelCooldown) return;
-      wheelCooldown = true;
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      if (delta > 20) goTo(current + 1);
-      else if (delta < -20) goTo(current - 1);
-      setTimeout(() => { wheelCooldown = false; }, 600);
-    }, { passive: false });
-
-    /* ── デモリール動画モーダル ── */
-    const reelModal    = document.getElementById('reel-modal');
-    const reelVideo    = document.getElementById('reel-video');
-    const reelOpenBtn  = document.getElementById('reel-open');
-    const reelCloseBtn = document.getElementById('reel-close');
-    const reelBackdrop = document.getElementById('reel-backdrop');
-    let reelPrevOverflow = '';
-
-    function openReelModal() {
-      reelPrevOverflow = document.body.style.overflow;
-      reelModal.classList.add('reel-modal--open');
-      reelModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      reelVideo.load();
-      reelVideo.play().catch(() => {});
-    }
-
-    function closeReelModal() {
-      reelModal.classList.remove('reel-modal--open');
-      reelModal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = reelPrevOverflow;
-      reelVideo.pause();
-      reelVideo.currentTime = 0;
-    }
-
-    document.querySelectorAll('.reel-trigger').forEach(btn => btn.addEventListener('click', openReelModal));
-    reelCloseBtn.addEventListener('click', closeReelModal);
-    reelBackdrop.addEventListener('click', closeReelModal);
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && reelModal.classList.contains('reel-modal--open')) closeReelModal();
-    });
-  </script>
+  });
+</script>
 
 </body>
 </html>
