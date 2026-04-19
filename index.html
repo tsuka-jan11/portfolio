@@ -141,7 +141,7 @@
     /* ── Grid ── */
     .project-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
 
@@ -283,6 +283,10 @@
     }
 
     /* ── Mobile ── */
+    @media (max-width: 1024px) {
+      .project-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
     @media (max-width: 768px) {
       .site-header { padding: 14px 20px 0; }
       .site-meta   { display: none; }
