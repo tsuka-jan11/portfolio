@@ -151,10 +151,17 @@
     }
     .project-card.out { display: none; }
 
+    .card-img {
+      overflow: hidden;
+    }
     .card-img img {
       width: 100%;
       height: auto;
       display: block;
+      transition: transform .4s ease;
+    }
+    .project-card:hover .card-img img {
+      transform: scale(1.04);
     }
 
     .card-body {
@@ -197,6 +204,18 @@
       color: var(--sub);
       margin-bottom: 4px;
     }
+
+    .card-link {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 0.60rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .card-link:hover { opacity: 0.6; }
 
     .card-desc {
       font-size: 0.63rem;
@@ -327,6 +346,7 @@
         <p class="card-company">USEN</p>
         <h2 class="card-title">Company Website</h2>
         <p class="card-desc">コーポレートサイトのデザイン／改修・オーガニックCVR獲得・POSレジブランドwebリニューアル</p>
+        <a href="https://usen.com/service/pos/" target="_blank" rel="noopener" class="card-link" onclick="event.stopPropagation()">USEN.com</a>
       </div>
     </article>
 
@@ -444,6 +464,7 @@
         <p class="card-company">TeamSpirit</p>
         <h2 class="card-title">LPデザイン</h2>
         <p class="card-desc">プロダクトやサービス施策のLPビジュアル設計とアセットデザイン</p>
+        <a href="https://tspark.teamspirit.com/" target="_blank" rel="noopener" class="card-link" onclick="event.stopPropagation()">tspark.teamspirit.com</a>
       </div>
     </article>
 
