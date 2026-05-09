@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TAKUJI TSUKAMOTO — Portfolio</title>
+  <meta name="description" content="塚本卓司のポートフォリオ。アートディレクション、デザイン、ブランディング、Web、イベント、モーショングラフィックスの制作実績を掲載。">
+  <meta name="theme-color" content="#efeeee">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TAKUJI TSUKAMOTO — Portfolio">
+  <meta property="og:description" content="アートディレクション、デザイン、ブランディング、Web、イベント、モーショングラフィックスの制作実績。">
+  <meta property="og:image" content="USEN/usen_01.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +19,20 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
 
     :root {
       --bg:       #efeeee;
@@ -29,6 +50,7 @@
       font-family: 'Noto Sans JP', sans-serif;
       background: var(--bg);
       color: var(--text);
+      line-height: 1.5;
     }
 
     /* ── Header ── */
@@ -148,6 +170,11 @@
     /* ── Card ── */
     .project-card {
       cursor: pointer;
+      border-radius: 6px;
+    }
+    .project-card:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 6px;
     }
     .project-card.out { display: none; }
 
@@ -314,10 +341,31 @@
       justify-content: center;
       z-index: 2;
     }
-    .modal-img img {
+    .modal-img img,
+    .modal-video-wrap video {
       width: 100%;
       height: auto;
       display: block;
+    }
+
+    .empty-state {
+      display: none;
+      padding: 48px 0;
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--sub);
+      text-align: center;
+    }
+    .empty-state.show { display: block; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
     }
 
     /* ── Mobile ── */
@@ -355,19 +403,19 @@
       <div class="badge-legend-item"><span class="badge on">Mo</span><span class="badge-label">Motion Graphics</span></div>
     </div>
   </div>
-  <nav class="filter-nav" id="cat-nav">
-    <button class="filter-btn active" data-f="all">ALL</button>
-    <button class="filter-btn" data-f="art">ART DIRECTION</button>
-    <button class="filter-btn" data-f="brand">BRANDING</button>
-    <button class="filter-btn" data-f="web">WEB / LP</button>
-    <button class="filter-btn" data-f="event">EVENT / PRINT</button>
-    <button class="filter-btn" data-f="motion">MOTION</button>
+  <nav class="filter-nav" id="cat-nav" aria-label="カテゴリで絞り込み">
+    <button class="filter-btn active" data-f="all" aria-pressed="true">ALL</button>
+    <button class="filter-btn" data-f="art" aria-pressed="false">ART DIRECTION</button>
+    <button class="filter-btn" data-f="brand" aria-pressed="false">BRANDING</button>
+    <button class="filter-btn" data-f="web" aria-pressed="false">WEB / LP</button>
+    <button class="filter-btn" data-f="event" aria-pressed="false">EVENT / PRINT</button>
+    <button class="filter-btn" data-f="motion" aria-pressed="false">MOTION</button>
   </nav>
-  <nav class="filter-nav" id="co-nav">
-    <button class="filter-btn company-btn active" data-co="all">ALL</button>
-    <button class="filter-btn company-btn" data-co="usen">USEN</button>
-    <button class="filter-btn company-btn" data-co="ts">TeamSpirit</button>
-    <button class="filter-btn company-btn" data-co="glv">Gulliver</button>
+  <nav class="filter-nav" id="co-nav" aria-label="会社で絞り込み">
+    <button class="filter-btn company-btn active" data-co="all" aria-pressed="true">ALL</button>
+    <button class="filter-btn company-btn" data-co="usen" aria-pressed="false">USEN</button>
+    <button class="filter-btn company-btn" data-co="ts" aria-pressed="false">TeamSpirit</button>
+    <button class="filter-btn company-btn" data-co="glv" aria-pressed="false">Gulliver</button>
   </nav>
 </header>
 
@@ -375,8 +423,8 @@
   <div class="project-grid" id="grid">
 
     <!-- USEN 01 -->
-    <article class="project-card" data-c="web" data-co="usen">
-      <div class="card-img"><img src="USEN/usen_01.jpg" alt="" fetchpriority="high"></div>
+    <article class="project-card" data-c="web" data-co="usen" tabindex="0" role="button" aria-label="Company Websiteの画像を拡大表示">
+      <div class="card-img"><img src="USEN/usen_01.jpg" fetchpriority="high" alt="USEN Company Websiteの制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge off">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
@@ -389,8 +437,8 @@
     </article>
 
     <!-- USEN 02 -->
-    <article class="project-card" data-c="event" data-co="usen">
-      <div class="card-img"><img src="USEN/usen_02.jpg" alt="" fetchpriority="high"></div>
+    <article class="project-card" data-c="event" data-co="usen" tabindex="0" role="button" aria-label="イベント・展示会の画像を拡大表示">
+      <div class="card-img"><img src="USEN/usen_02.jpg" loading="lazy" alt="USEN イベント・展示会の制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
@@ -402,8 +450,8 @@
     </article>
 
     <!-- USEN 03 -->
-    <article class="project-card" data-c="web" data-co="usen">
-      <div class="card-img"><img src="USEN/usen_03.jpg" alt="" fetchpriority="high"></div>
+    <article class="project-card" data-c="web" data-co="usen" tabindex="0" role="button" aria-label="各種クリエイティブの画像を拡大表示">
+      <div class="card-img"><img src="USEN/usen_03.jpg" loading="lazy" alt="USEN 各種クリエイティブの制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
@@ -415,8 +463,8 @@
     </article>
 
     <!-- 02 TeamSpirit -->
-    <article class="project-card" data-c="web" data-co="ts">
-      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_01.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="web" data-co="ts" tabindex="0" role="button" aria-label="アイキャッチ・バナーデザインの画像を拡大表示">
+      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_01.jpg" loading="lazy" alt="TeamSpirit アイキャッチ・バナーデザインの制作実績サムネイル" width="1600" height="1132"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge on">Ph</span><span class="badge off">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
@@ -428,8 +476,8 @@
     </article>
 
     <!-- 03 TeamSpirit -->
-    <article class="project-card" data-c="art" data-co="ts">
-      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_02.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="art" data-co="ts" tabindex="0" role="button" aria-label="セールスマテリアル リプレイスの画像を拡大表示">
+      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_02.jpg" loading="lazy" alt="TeamSpirit セールスマテリアル リプレイスの制作実績サムネイル" width="1600" height="1132"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge on">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
@@ -441,8 +489,8 @@
     </article>
 
     <!-- 04 TeamSpirit -->
-    <article class="project-card" data-c="art" data-co="ts">
-      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_03.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="art" data-co="ts" tabindex="0" role="button" aria-label="KV・イメージボード・コンセプトの画像を拡大表示">
+      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_03.jpg" loading="lazy" alt="TeamSpirit KV・イメージボード・コンセプトの制作実績サムネイル" width="1600" height="1132"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge on">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
@@ -454,8 +502,8 @@
     </article>
 
     <!-- 05 TeamSpirit -->
-    <article class="project-card" data-c="brand" data-co="ts">
-      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_04.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="brand" data-co="ts" tabindex="0" role="button" aria-label="Rebranding_1の画像を拡大表示">
+      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_04.jpg" loading="lazy" alt="TeamSpirit Rebranding_1の制作実績サムネイル" width="1600" height="1133"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge off">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
@@ -467,8 +515,8 @@
     </article>
 
     <!-- 06 TeamSpirit -->
-    <article class="project-card" data-c="brand" data-co="ts">
-      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_05.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="brand" data-co="ts" tabindex="0" role="button" aria-label="Rebranding_2の画像を拡大表示">
+      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_05.jpg" loading="lazy" alt="TeamSpirit Rebranding_2の制作実績サムネイル" width="1600" height="1132"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge off">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
@@ -480,8 +528,8 @@
     </article>
 
     <!-- 07 TeamSpirit -->
-    <article class="project-card" data-c="brand" data-co="ts">
-      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_06.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="brand" data-co="ts" tabindex="0" role="button" aria-label="ロゴデザインの画像を拡大表示">
+      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_06.jpg" loading="lazy" alt="TeamSpirit ロゴデザインの制作実績サムネイル" width="1980" height="1400"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge off">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
@@ -493,8 +541,8 @@
     </article>
 
     <!-- 08 TeamSpirit -->
-    <article class="project-card" data-c="web" data-co="ts">
-      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_07.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="web" data-co="ts" tabindex="0" role="button" aria-label="LPデザインの画像を拡大表示">
+      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_07.jpg" loading="lazy" alt="TeamSpirit LPデザインの制作実績サムネイル" width="2970" height="2100"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge on">Ph</span><span class="badge off">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
@@ -507,8 +555,8 @@
     </article>
 
     <!-- 09 TeamSpirit -->
-    <article class="project-card" data-c="event" data-co="ts">
-      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_08.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="event" data-co="ts" tabindex="0" role="button" aria-label="イベントパーツデザインの画像を拡大表示">
+      <div class="card-img"><img src="TEAMSPIRIT/teamspirit_08.jpg" loading="lazy" alt="TeamSpirit イベントパーツデザインの制作実績サムネイル" width="1600" height="1133"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge on">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
@@ -520,8 +568,8 @@
     </article>
 
     <!-- 10 Gulliver -->
-    <article class="project-card" data-c="art" data-co="glv">
-      <div class="card-img"><img src="GULLIVER/gulliver_01.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="art" data-co="glv" tabindex="0" role="button" aria-label="KV・イメージボード・コンセプト①の画像を拡大表示">
+      <div class="card-img"><img src="GULLIVER/gulliver_01.jpg" loading="lazy" alt="Gulliver KV・イメージボード・コンセプト1の制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge on">Ph</span><span class="badge off">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
@@ -533,8 +581,8 @@
     </article>
 
     <!-- 11 Gulliver -->
-    <article class="project-card" data-c="art" data-co="glv">
-      <div class="card-img"><img src="GULLIVER/gulliver_02.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="art" data-co="glv" tabindex="0" role="button" aria-label="KV・イメージボード・コンセプト②の画像を拡大表示">
+      <div class="card-img"><img src="GULLIVER/gulliver_02.jpg" loading="lazy" alt="Gulliver KV・イメージボード・コンセプト2の制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge on">Ph</span><span class="badge off">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
@@ -546,8 +594,8 @@
     </article>
 
     <!-- 12 Gulliver -->
-    <article class="project-card" data-c="art" data-co="glv">
-      <div class="card-img"><img src="GULLIVER/gulliver_03.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="art" data-co="glv" tabindex="0" role="button" aria-label="KV・イメージボード・コンセプト③の画像を拡大表示">
+      <div class="card-img"><img src="GULLIVER/gulliver_03.jpg" loading="lazy" alt="Gulliver KV・イメージボード・コンセプト3の制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge on">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
@@ -559,8 +607,8 @@
     </article>
 
     <!-- 13 Gulliver -->
-    <article class="project-card" data-c="brand" data-co="glv">
-      <div class="card-img"><img src="GULLIVER/gulliver_04.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="brand" data-co="glv" tabindex="0" role="button" aria-label="Rebrandingの画像を拡大表示">
+      <div class="card-img"><img src="GULLIVER/gulliver_04.jpg" loading="lazy" alt="Gulliver Rebrandingの制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge off">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
@@ -572,8 +620,8 @@
     </article>
 
     <!-- 14 Gulliver -->
-    <article class="project-card" data-c="event" data-co="glv">
-      <div class="card-img"><img src="GULLIVER/gulliver_05.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="event" data-co="glv" tabindex="0" role="button" aria-label="オフラインツール①の画像を拡大表示">
+      <div class="card-img"><img src="GULLIVER/gulliver_05.jpg" loading="lazy" alt="Gulliver オフラインツール1の制作実績サムネイル" width="1600" height="1132"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge on">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
@@ -585,8 +633,8 @@
     </article>
 
     <!-- 15 Gulliver -->
-    <article class="project-card" data-c="event" data-co="glv">
-      <div class="card-img"><img src="GULLIVER/gulliver_06.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="event" data-co="glv" tabindex="0" role="button" aria-label="オフラインツール②の画像を拡大表示">
+      <div class="card-img"><img src="GULLIVER/gulliver_06.jpg" loading="lazy" alt="Gulliver オフラインツール2の制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge on">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
@@ -598,8 +646,8 @@
     </article>
 
     <!-- 16 Gulliver -->
-    <article class="project-card" data-c="event" data-co="glv">
-      <div class="card-img"><img src="GULLIVER/gulliver_07.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="event" data-co="glv" tabindex="0" role="button" aria-label="オフラインツール③の画像を拡大表示">
+      <div class="card-img"><img src="GULLIVER/gulliver_07.jpg" loading="lazy" alt="Gulliver オフラインツール3の制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge on">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
@@ -611,8 +659,8 @@
     </article>
 
     <!-- 17 Gulliver -->
-    <article class="project-card" data-c="web" data-co="glv">
-      <div class="card-img"><img src="GULLIVER/gulliver_08.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="web" data-co="glv" tabindex="0" role="button" aria-label="LPデザインの画像を拡大表示">
+      <div class="card-img"><img src="GULLIVER/gulliver_08.jpg" loading="lazy" alt="Gulliver LPデザインの制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge on">Ph</span><span class="badge off">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
@@ -624,8 +672,8 @@
     </article>
 
     <!-- 18 Gulliver -->
-    <article class="project-card" data-c="event" data-co="glv">
-      <div class="card-img"><img src="GULLIVER/gulliver_09.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="event" data-co="glv" tabindex="0" role="button" aria-label="ポスターデザインの画像を拡大表示">
+      <div class="card-img"><img src="GULLIVER/gulliver_09.jpg" loading="lazy" alt="Gulliver ポスターデザインの制作実績サムネイル" width="1600" height="1132"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge on">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
@@ -637,8 +685,8 @@
     </article>
 
     <!-- 19 Gulliver motion -->
-    <article class="project-card" data-c="motion" data-co="glv ts" data-video="motion/tsukamoto_reel.mp4">
-      <div class="card-img"><img src="GULLIVER/gulliver_10.jpg" alt="" loading="lazy"></div>
+    <article class="project-card" data-c="motion" data-co="glv ts" data-video="motion/tsukamoto_reel.mp4" tabindex="0" role="button" aria-label="モーショングラフィックスのデモリールを再生">
+      <div class="card-img"><img src="GULLIVER/gulliver_10.jpg" loading="lazy" alt="Gulliver モーショングラフィックスのデモリールサムネイル" width="1600" height="1132"></div>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge off">Co</span><span class="badge off">Mgr</span><span class="badge on">Mo</span>
@@ -651,58 +699,97 @@
     </article>
 
   </div>
+  <p class="empty-state" id="filter-empty" aria-live="polite">該当する実績はありません。</p>
 </main>
 
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-hidden="true">
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-title">
   <div class="modal-backdrop" id="modal-backdrop"></div>
   <div class="modal-panel">
+    <h2 class="visually-hidden" id="modal-title">制作実績プレビュー</h2>
     <button class="modal-close" id="modal-close" aria-label="閉じる">×</button>
     <div class="modal-img" id="modal-img-wrap"><img id="modal-img" src="" alt=""></div>
     <div class="modal-video-wrap" id="modal-video-wrap" style="display:none">
-      <video id="modal-video" controls playsinline preload="none" style="width:100%;height:auto;display:block;"></video>
+      <video id="modal-video" controls playsinline preload="none"></video>
     </div>
   </div>
 </div>
 
 <script>
-  const cards      = document.querySelectorAll('.project-card');
+  const cards          = document.querySelectorAll('.project-card');
   const modal          = document.getElementById('modal');
+  const modalTitle     = document.getElementById('modal-title');
+  const modalClose     = document.getElementById('modal-close');
   const modalImg       = document.getElementById('modal-img');
   const modalImgWrap   = document.getElementById('modal-img-wrap');
   const modalVideo     = document.getElementById('modal-video');
   const modalVideoWrap = document.getElementById('modal-video-wrap');
+  const emptyState     = document.getElementById('filter-empty');
+  let lastFocusedElement = null;
 
   function openModal(card) {
+    lastFocusedElement = document.activeElement;
+    const title = card.querySelector('.card-title').textContent;
     const videoSrc = card.dataset.video;
+    modalTitle.textContent = title;
     if (videoSrc) {
       modalImgWrap.style.display   = 'none';
       modalVideoWrap.style.display = 'block';
+      modalImg.removeAttribute('src');
       modalVideo.src = videoSrc;
       modalVideo.load();
     } else {
+      const cardImg = card.querySelector('.card-img img');
       modalImgWrap.style.display   = 'block';
       modalVideoWrap.style.display = 'none';
-      modalImg.src = card.querySelector('.card-img img').src;
-      modalImg.alt = card.querySelector('.card-title').textContent;
+      modalImg.src = cardImg.src;
+      modalImg.alt = cardImg.alt || title;
     }
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    modalClose.focus();
   }
 
   function closeModal() {
+    if (!modal.classList.contains('open')) return;
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     modalVideo.pause();
-    modalVideo.src = '';
+    modalVideo.removeAttribute('src');
+    modalImg.removeAttribute('src');
+    if (lastFocusedElement) lastFocusedElement.focus();
   }
 
-  cards.forEach(card => card.addEventListener('click', () => openModal(card)));
-  document.getElementById('modal-close').addEventListener('click', closeModal);
+  function trapModalFocus(e) {
+    if (!modal.classList.contains('open') || e.key !== 'Tab') return;
+    const focusable = modal.querySelectorAll('button, video, [href], [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => openModal(card));
+    card.addEventListener('keydown', e => {
+      if (e.target.closest('a, button, video')) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModal(card);
+      }
+    });
+  });
+  modalClose.addEventListener('click', closeModal);
   document.getElementById('modal-backdrop').addEventListener('click', closeModal);
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeModal();
+    trapModalFocus(e);
   });
   const badgeLabels = {
     'Ar': 'アートディレクション',
@@ -715,24 +802,38 @@
   };
   document.querySelectorAll('.badge').forEach(b => {
     const label = badgeLabels[b.textContent.trim()];
-    if (label) b.dataset.tooltip = label;
+    if (label) {
+      const state = b.classList.contains('on') ? '担当' : '担当外';
+      b.dataset.tooltip = label;
+      b.setAttribute('aria-label', `${label}: ${state}`);
+      b.setAttribute('title', `${label}: ${state}`);
+    }
   });
 
   let activeCat = 'all';
   let activeCo  = 'all';
 
   function applyFilter() {
+    let visibleCount = 0;
     cards.forEach(card => {
       const matchCat = activeCat === 'all' || card.dataset.c === activeCat;
       const matchCo  = activeCo  === 'all' || card.dataset.co.split(' ').includes(activeCo);
-      card.classList.toggle('out', !matchCat || !matchCo);
+      const isVisible = matchCat && matchCo;
+      card.classList.toggle('out', !isVisible);
+      card.setAttribute('aria-hidden', String(!isVisible));
+      if (isVisible) visibleCount += 1;
     });
+    emptyState.classList.toggle('show', visibleCount === 0);
   }
 
   document.querySelectorAll('#cat-nav .filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('#cat-nav .filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#cat-nav .filter-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       activeCat = btn.dataset.f;
       applyFilter();
     });
@@ -740,8 +841,12 @@
 
   document.querySelectorAll('#co-nav .filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('#co-nav .filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#co-nav .filter-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       activeCo = btn.dataset.co;
       applyFilter();
     });
