@@ -180,15 +180,21 @@
 
     .card-img {
       overflow: hidden;
+      border-radius: 6px;
+      -webkit-mask-image: -webkit-radial-gradient(white, black);
     }
     .card-img img {
       width: 100%;
       height: auto;
       display: block;
-      transition: transform .4s ease;
+      -webkit-transition: -webkit-transform .8s cubic-bezier(0.33, 0, 0.2, 1);
+      transition: transform .8s cubic-bezier(0.33, 0, 0.2, 1);
     }
-    .project-card:hover .card-img img {
-      transform: scale(1.04);
+    @media (hover: hover) {
+      .project-card:hover .card-img img {
+        -webkit-transform: scale(1.05);
+        transform: scale(1.05);
+      }
     }
 
     .card-body {
@@ -322,6 +328,8 @@
       max-height: 96dvh;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+      border-radius: 16px;
+      overflow: hidden;
     }
     .modal-close {
       position: absolute;
@@ -365,6 +373,9 @@
         animation-iteration-count: 1 !important;
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
+      }
+      .card-img img {
+        transition-duration: .8s !important;
       }
     }
 
@@ -416,6 +427,7 @@
     <button class="filter-btn company-btn" data-co="usen" aria-pressed="false">USEN</button>
     <button class="filter-btn company-btn" data-co="ts" aria-pressed="false">TeamSpirit</button>
     <button class="filter-btn company-btn" data-co="glv" aria-pressed="false">Gulliver</button>
+    <button class="filter-btn company-btn" data-co="private" aria-pressed="false">PRIVATE</button>
   </nav>
 </header>
 
@@ -423,7 +435,7 @@
   <div class="project-grid" id="grid">
 
     <!-- USEN 01 -->
-    <article class="project-card" data-c="web" data-co="usen" tabindex="0" role="button" aria-label="Company Websiteの画像を拡大表示">
+    <article class="project-card" data-c="art web" data-co="usen" tabindex="0" role="button" aria-label="Company Websiteの画像を拡大表示">
       <div class="card-img"><img src="USEN/usen_01.jpg" fetchpriority="high" alt="USEN Company Websiteの制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
@@ -437,7 +449,7 @@
     </article>
 
     <!-- USEN 02 -->
-    <article class="project-card" data-c="event" data-co="usen" tabindex="0" role="button" aria-label="イベント・展示会の画像を拡大表示">
+    <article class="project-card" data-c="art event" data-co="usen" tabindex="0" role="button" aria-label="イベント・展示会の画像を拡大表示">
       <div class="card-img"><img src="USEN/usen_02.jpg" loading="lazy" alt="USEN イベント・展示会の制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
@@ -450,7 +462,7 @@
     </article>
 
     <!-- USEN 03 -->
-    <article class="project-card" data-c="web" data-co="usen" tabindex="0" role="button" aria-label="各種クリエイティブの画像を拡大表示">
+    <article class="project-card" data-c="art web" data-co="usen" tabindex="0" role="button" aria-label="各種クリエイティブの画像を拡大表示">
       <div class="card-img"><img src="USEN/usen_03.jpg" loading="lazy" alt="USEN 各種クリエイティブの制作実績サムネイル" width="1600" height="1131"></div>
       <div class="card-body">
         <div class="card-badges">
@@ -459,6 +471,33 @@
         <p class="card-company">USEN</p>
         <h2 class="card-title">各種クリエイティブ</h2>
         <p class="card-desc">LP・セミナーバナー・出稿広告</p>
+      </div>
+    </article>
+
+    <!-- USEN 04 Teaser Website -->
+    <article class="project-card" data-c="art web" data-co="usen" tabindex="0" role="button" aria-label="Teaser Websiteの画像を拡大表示">
+      <div class="card-img"><img src="USEN/usen_teaser_01.jpg" loading="lazy" alt="USEN Teaser Websiteの制作実績サムネイル" width="1600" height="1131"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">USEN</p>
+        <h2 class="card-title">Teaser Website</h2>
+        <p class="card-desc">デザイン、コーディング（Claude）進行管理</p>
+        <a href="https://www.usen-ts.co.jp/une/" target="_blank" rel="noopener" class="card-link" onclick="event.stopPropagation()">usen-ts.co.jp/une</a>
+      </div>
+    </article>
+
+    <!-- USEN 05 社員用ノベルティ -->
+    <article class="project-card" data-c="art event" data-co="usen" tabindex="0" role="button" aria-label="社員用ノベルティの画像を拡大表示">
+      <div class="card-img"><img src="USEN/usen_teaser_02.jpg" loading="lazy" alt="USEN 社員用ノベルティの制作実績サムネイル" width="1600" height="1131"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge on">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge on">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">USEN</p>
+        <h2 class="card-title">社員用ノベルティ</h2>
+        <p class="card-desc">65周年記念に関しての配布用グッズ。ロゴデザイン、コンセプト、グッズ選定。</p>
       </div>
     </article>
 
@@ -698,6 +737,19 @@
       </div>
     </article>
 
+    <!-- Private アプリ -->
+    <article class="project-card" data-c="web" data-co="private" tabindex="0" role="button" aria-label="Private Appの画像を拡大表示">
+      <div class="card-img"><img src="PRIVATE/private_app.jpg" loading="lazy" alt="こしすたWARS・ペットーク iOSアプリの制作実績サムネイル" width="1600" height="1131"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge off">Ar</span><span class="badge on">De</span><span class="badge off">Cp</span><span class="badge off">Ph</span><span class="badge on">Co</span><span class="badge off">Mgr</span><span class="badge off">Mo</span>
+        </div>
+        <p class="card-company">Private</p>
+        <h2 class="card-title">アプリ</h2>
+        <p class="card-desc">趣味でアプリを開発してます。こしすたWARS（通信対戦ゲーム）・ペットーク（ペットの気持ち可視化）</p>
+      </div>
+    </article>
+
   </div>
   <p class="empty-state" id="filter-empty" aria-live="polite">該当する実績はありません。</p>
 </main>
@@ -816,7 +868,7 @@
   function applyFilter() {
     let visibleCount = 0;
     cards.forEach(card => {
-      const matchCat = activeCat === 'all' || card.dataset.c === activeCat;
+      const matchCat = activeCat === 'all' || card.dataset.c.split(' ').includes(activeCat);
       const matchCo  = activeCo  === 'all' || card.dataset.co.split(' ').includes(activeCo);
       const isVisible = matchCat && matchCo;
       card.classList.toggle('out', !isVisible);
